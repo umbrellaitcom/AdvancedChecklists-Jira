@@ -1,6 +1,10 @@
 @import 'common/font';
 @import 'common/icon';
 
+body {
+  background-color: white !important;
+}
+
 .checklists-app {
   input {
     height: 24px;

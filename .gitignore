@@ -14,3 +14,4 @@
 /.idea/
 /jira-working-dir/
 /node_modules/
+/web/public-src/sass/.sass-cache/
