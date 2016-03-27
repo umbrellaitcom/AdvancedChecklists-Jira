@@ -33,6 +33,16 @@ body {
     margin: 10px;
   }
   
+  div.error {
+    float: right;
+    margin: 10px;
+    color: #BF0808;
+    font-weight: bold;
+    font-size: 20px;
+    border: 1px solid;
+    padding: 5px;
+  }
+  
   div.checklist-wapper {
     padding: 10px 0;
     background-color: white;
