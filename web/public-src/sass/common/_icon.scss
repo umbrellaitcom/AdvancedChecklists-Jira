@@ -1,0 +1,41 @@
+[class^="cl-icon-"]:before, [class*="sc-icon-"]:before {
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  width: 1em;
+  margin-right: .2em;
+  margin-left: .2em;
+}
+
+.cl-icon-notebook-list:before {
+  content: "\e900";
+}
+
+.cl-icon-dots-three-horizontal:before {
+  content: "\e901";
+}
+
+.cl-icon-checkbox-unchecked:before {
+  content: "\e902";
+}
+
+.cl-icon-checkbox-checked:before {
+  content: "\e903";
+}
+
+.cl-icon-plus:before {
+  content: "\e904";
+}
+
+.cl-icon-cross:before {
+  content: "\e905";
+}
+
+.cl-icon-warning:before {
+  content: "\e906";
+  color: #BF0808;
+}

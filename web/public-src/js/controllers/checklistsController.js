@@ -1,0 +1,305 @@
+'use strict';
+
+var checklistsController = angularApplication.controller('ChecklistsController', function($scope, $element) {
+	var checklistsCtrl = this;
+	var appData = window.checklistsData;
+
+	/**
+	 * Initialized checklists model
+	 */
+	checklistsCtrl.checklists = appData.checklists;
+	
+	for ( var i in checklistsCtrl.checklists ) {
+		checklistsCtrl.checklists[i].editName = checklistsCtrl.checklists[i].name;
+		
+		for ( var j in checklistsCtrl.checklists[i].items ) {
+			checklistsCtrl.checklists[i].items[j].editText = checklistsCtrl.checklists[i].items[j].text;
+		}
+	}
+
+	/**
+	 * Initialized new checklist model
+	 * @type {{name: string}}
+	 */
+	checklistsCtrl.newChecklist = {
+		'name': '',
+		'editMode': false
+	};
+
+	$scope.checklistsSortableOptions = {
+		handle: '.checklist-wapper i.cl-icon-notebook-list',
+		stop: function(e) {
+			var ids = [];
+			for (var i in checklistsCtrl.checklists ) {
+				ids.push( checklistsCtrl.checklists[i].id );
+			}
+			
+			jQuery.post( appData.endpoints.order_checklist, {
+				'issue_id': appData.issue_id,
+				'orders': ids 
+			}, function( response ){
+				if (response.status != true) {
+					alert('fail!');
+				}
+			});
+		}
+	};
+
+	$scope.itemsSortableOptions = {
+		items: "li:not(.add-new-item-link)",
+		connectWith: "ul.checklist",
+		stop: function(e) {
+			var checklistsSorts = {};
+			for (var i in checklistsCtrl.checklists ) {
+				var itemIds = [];
+				for (var j in checklistsCtrl.checklists[i].items) {
+					itemIds.push( checklistsCtrl.checklists[i].items[j].id );
+				}
+				checklistsSorts[ checklistsCtrl.checklists[i].id ] = itemIds;
+			}
+			
+			//console.log(checklistsSorts);
+			jQuery.post( appData.endpoints.order_items, {
+				'issue_id': appData.issue_id,
+				'checklists_sort': checklistsSorts
+			}, function( response ){
+				if (response.status != true) {
+					alert('fail!');
+				}
+			});
+		}
+	};
+
+	/**
+	 * Create new checklist
+	 */
+	checklistsCtrl.addNewChecklist = function() {
+		if ( ! checklistsCtrl.newChecklist.name ) {
+			return;
+		}
+		
+		jQuery.post( appData.endpoints.create_checklist, {
+			'issue_id': appData.issue_id,
+			'name': checklistsCtrl.newChecklist.name
+		}, function( response ) {
+			if (response.status != true) {
+				alert('fail!');
+				return;
+			}
+
+			checklistsCtrl.checklists.push({
+				'id': response.checklist_id,
+				'name': checklistsCtrl.newChecklist.name,
+				'editName': checklistsCtrl.newChecklist.name,
+				'items': []
+			});
+
+			console.log('Created new checklist "'+checklistsCtrl.newChecklist.name+'" with ID: ' + response.checklist_id);
+
+			checklistsCtrl.newChecklist.name = '';
+			checklistsCtrl.newChecklist.editMode = false;
+
+			$scope.$apply();
+		});
+	};
+
+	/**
+	 * Update checklist name
+	 * @param checklist
+	 */
+	checklistsCtrl.updateChecklist = function( checklist ) {
+		if ( checklist.name == checklist.editName ) {
+			checklist.editMode = ! checklist.editMode;
+			return;
+		}
+		
+		checklist.name = checklist.editName;
+		jQuery.post( appData.endpoints.update_checklist, {
+			'issue_id': appData.issue_id,
+			'id': checklist.id,
+			'name': checklist.name
+		}, function( response ) {
+			if (response.status != true) {
+				alert('fail!');
+				return;
+			}
+
+			console.log('New checklist name: ' + checklist.name);
+			checklist.editMode = ! checklist.editMode;
+
+			$scope.$apply();
+		});
+	};
+
+	/**
+	 * Remove checklist
+	 * @param checklist
+	 */
+	checklistsCtrl.removeChecklist = function( checklist ) {
+		for ( var i in checklistsCtrl.checklists ) {
+			if (checklistsCtrl.checklists[i].id == checklist.id) {
+				jQuery.post( appData.endpoints.remove_checklist, {
+					'issue_id': appData.issue_id,
+					'id': checklist.id
+				}, function( response ) {
+					if (response.status != true) {
+						alert('fail!');
+					}
+
+					console.log('Removed checklist "'+checklist.name+'" with ID: ' + checklist.id);
+				});
+				checklistsCtrl.checklists.splice(i,1);
+			}
+		}
+	};
+
+	/**
+	 * Add new item to checklist
+	 * @param checklist
+	 */
+	checklistsCtrl.addNewItem = function( checklist ) {
+		if ( ! checklist.newItemText ) {
+			return;
+		}
+		
+		jQuery.post( appData.endpoints.create_item, {
+			'issue_id': appData.issue_id,
+			'checklist_id': checklist.id,
+			'item_text': checklist.newItemText
+		}, function( response ) {
+			if (response.status != true) {
+				alert('fail!');
+				return;
+			}
+
+			checklist.items.push({
+				'id': response.item_id,
+				checked: false,
+				'text': checklist.newItemText,
+				'editText': checklist.newItemText
+			});
+
+			console.log('Created new item "'+checklist.newItemText+'" with ID: ' + response.item_id);
+
+			checklist.newItemText = '';
+
+			$scope.$apply();
+		});
+	};
+
+	/**
+	 * update item
+	 * @param item
+	 */
+	checklistsCtrl.updateItem = function( checklist, item ) {
+		if ( item.editText == item.text ) {
+			item.editMode = ! item.editMode;
+			return;
+		}
+
+		item.text = item.editText;
+		
+		jQuery.post( appData.endpoints.update_item, {
+			'issue_id': appData.issue_id,
+			'checklist_id': checklist.id,
+			'item_id': item.id,
+			'item_text': item.text
+		}, function( response ) {
+			if (response.status != true) {
+				alert('fail!');
+				return;
+			}
+
+			console.log('Updated item "'+item.text+'" with ID: ' + item.id);
+			item.editMode = ! item.editMode;
+
+			$scope.$apply();
+		});
+	};
+
+	/**
+	 * Remove item from checklist
+	 * @param checklist
+	 * @param item
+	 */
+	checklistsCtrl.removeItem = function( checklist, item ) {
+		for ( var i in checklist.items ) {
+			if ( checklist.items[i].id == item.id ) {
+				jQuery.post( appData.endpoints.remove_item, {
+					'issue_id': appData.issue_id,
+					'checklist_id': checklist.id,
+					'item_id': item.id
+				}, function( response ) {
+					if (response.status != true) {
+						alert('fail!');
+					}
+
+					console.log('Removed item "'+item.text+'" with ID: ' + item.id + ' in checklist "'+checklist.name+'" with ID: ' + checklist.id);
+				});
+				checklist.items.splice(i,1);
+			}
+		}
+	};
+
+	/**
+	 * Complete/Un-complete item in checklist
+	 * @param el
+	 */
+	checklistsCtrl.completeItem = function(checklist, item) {
+		item.checked = !item.checked;
+		
+		jQuery.post( appData.endpoints.complete_item, {
+			'issue_id': appData.issue_id,
+			'checklist_id': checklist.id,
+			'item_id': item.id
+		}, function( response ) {
+			if (response.status != true) {
+				alert('fail!');
+			}
+
+			if ( response.checked ) {
+				console.log('Completed item "'+item.text+'" with ID: ' + item.id);
+			} else {
+				console.log('Uncompleted item "'+item.text+'" with ID: ' + item.id);
+			}
+		});
+
+
+	};
+
+	/**
+	 * Toggle new checklist form
+	 */
+	checklistsCtrl.toggleNewChecklistForm = function() {
+		checklistsCtrl.newChecklist.editMode = ! checklistsCtrl.newChecklist.editMode;
+	};
+
+	/**
+	 * Toggle checklist in/out edit mode
+	 * @param checklist
+	 */
+	checklistsCtrl.toggleChecklistEdit = function( checklist ) {
+		checklist.editMode = ! checklist.editMode;
+		
+		if ( checklist.editMode && ! checklist.editName ) {
+			checklist.editName = checklist.name;
+		} 
+	};
+	
+	checklistsCtrl.toggleNeItemEditMode = function( checklist ) {
+		checklist.newItemEditMode = ! checklist.newItemEditMode;
+	};
+
+	/**
+	 * Toggle item edit mode
+	 * @param item
+	 */
+	checklistsCtrl.toggleItemEditMode = function( item ) {
+		item.editMode = ! item.editMode;
+		
+		if ( item.editMode && ! item.editText ) {
+			item.editText = item.text;
+		}
+	};
+
+});

@@ -1,0 +1,74 @@
+@import 'common/font';
+@import 'common/icon';
+
+.checklists-app {
+  input {
+    height: 24px;
+    font-size: 14px;
+    padding: 0 5px;
+    min-width: 230px;
+  }
+
+  a.cl-remove-link {
+    font-size: 14px;
+    color: #BF0808;
+    display: inline-block;
+    cursor: pointer;
+    margin: 0;
+    padding: 4px 4px;
+    vertical-align: baseline;
+    white-space: nowrap;
+  }
+  
+  background-color: #ffffff;
+  height: 100%;
+  
+  div.new-checklist-wrapper {
+    float: right;
+    margin: 10px;
+  }
+  
+  div.checklist-wapper {
+    padding: 10px 0;
+    background-color: white;
+
+    div.header-checklist {
+      color: #333;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.5;
+      text-transform: none;
+      
+      i.cl-icon-notebook-list {
+        cursor: move;  
+      }
+      
+      span.checklist-name {
+        cursor: pointer;
+      }
+    }
+    ul.checklist {
+      list-style: none;
+      font-size: 15px;
+      padding-left: 32px;
+      margin-top: 5px;
+
+      li {
+        display: block;
+        margin-bottom: 5px;
+        background-color: white;
+
+        label {
+          &.done {
+            text-decoration: line-through;
+            color: #8c8c8c;
+          }
+        }
+      }
+      
+      li.add-new-item-link {
+        margin-left: 25px;
+      }
+    }
+  }
+}

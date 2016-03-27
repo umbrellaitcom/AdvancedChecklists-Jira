@@ -1,0 +1,12 @@
+services:
+    issue:
+        class: AppBundle\Service\IssueService
+        arguments: [@doctrine.orm.entity_manager]
+        
+    checklist:
+        class: AppBundle\Service\ChecklistService
+        arguments: [@doctrine.orm.entity_manager]
+        
+    item:
+        class: AppBundle\Service\ItemService
+        arguments: [@doctrine.orm.entity_manager]

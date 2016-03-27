@@ -1,0 +1,6 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+ac:
+    resource: "@AtlassianConnectBundle/Resources/config/routing.yml"
