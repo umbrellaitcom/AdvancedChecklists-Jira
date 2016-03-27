@@ -33,7 +33,8 @@ class ViewController extends Controller
             'checklistsData' => $this->get('checklist')->getChecklistsForIssue( $issue ),
             'issueId' => $request->query->get('issue_id'),
             'issueKey' => $issueKey,
-            'projectKey' => $projectKey
+            'projectKey' => $projectKey,
+            'baseUrl' => $this->getUser()->getBaseUrl(),
         ));
     }
 
