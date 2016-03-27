@@ -1,6 +1,6 @@
 'use strict';
 
-var checklistsController = angularApplication.controller('ChecklistsController', ["$scope", function($scope) {
+var checklistsController = angularApplication.controller('ChecklistsController', ["$scope", "$sce", function($scope, $sce) {
 	var checklistsCtrl = this;
 	var appData = window.checklistsData;
 
@@ -34,6 +34,15 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	 * @type {boolean}
 	 */
 	checklistsCtrl.errorOccurred = false;
+
+	var parseItemText = function( text ) {
+		var words = text.split(' ');
+		for ( var i in words ) {
+			words[i] = words[i].replace(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/ig, '<a target="_blank" href="$&">$&</a>');
+		}
+		
+		return words.join(' ');
+	};
 	
 	/**
 	 * Initialized checklists model
@@ -45,6 +54,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		
 		for ( var j in checklistsCtrl.checklists[i].items ) {
 			checklistsCtrl.checklists[i].items[j].editText = checklistsCtrl.checklists[i].items[j].text;
+			checklistsCtrl.checklists[i].items[j].parsedText = $sce.trustAsHtml( parseItemText( checklistsCtrl.checklists[i].items[j].text ) );
 		}
 	}
 
@@ -386,5 +396,5 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	for (var i in checklistsCtrl.checklists) {
 		checklistsCtrl.checklists[i].completedPercents = getCompletedPercents( checklistsCtrl.checklists[i].items );
 	}
-
+	
 }]);
