@@ -117,7 +117,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				'name': checklistsCtrl.newChecklist.name,
 				'editName': checklistsCtrl.newChecklist.name,
 				'items': [],
-				'completedPercents': 0
+				'completedPercents': "0%"
 			});
 
 			console.log('Created new checklist "'+checklistsCtrl.newChecklist.name+'" with ID: ' + response.checklist_id);
@@ -343,6 +343,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			}
 		}
 		
+		if ( ! items.length ) {
+			return '0%';
+		}
 		return Math.round( (checked * 100) / items.length  ) + '%';
 	};
 
