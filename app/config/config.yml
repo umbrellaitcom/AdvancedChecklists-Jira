@@ -68,13 +68,13 @@ swiftmailer:
 # Atlassian Connect Configuration
 atlassian_connect:
     prod:
-        key: 'com.umbrella-web.checklists'
+        key: 'com.advancedchecklists.checklists'
         name: 'Advanced Checklists'
         description: 'Advanced checklists add-on for jira'
         vendor:
-            name: 'Makarenko Yuri'
-            url: 'http://umbrella-web.com'
-        baseUrl: 'http://52.91.243.22/'
+            name: 'Advanced Checklists'
+            url: 'https://advancedchecklists.com/'
+        baseUrl: 'https://advancedchecklists.com/'
         lifecycle:
             installed: '/handshake'
         scopes: ['READ', 'WRITE']
