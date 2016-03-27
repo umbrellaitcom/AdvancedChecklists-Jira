@@ -40,6 +40,7 @@
             <div ui-sortable="checklistsSortableOptions" ng-model="checklistsCtrl.checklists" >
                 <div  ng-repeat="checklist in checklistsCtrl.checklists" class="checklists">
                     <div id="checklist-[[ checklist.id ]]" class="checklist-wapper">
+                        
                         <div class="header-checklist">
                             <i class="cl-icon-notebook-list"></i>
                             
@@ -50,7 +51,14 @@
                             
                             <i ng-show="(checklist.editName != checklist.name) && (! checklist.editMode)" title="value is changed but not saved" class="cl-icon-warning"></i>
                         </div>
-                        
+
+
+                        <div ng-class="{complete: checklist.completedPercents == '100%'}" class="progress-checklist">
+                            <span class="percent">[[checklist.completedPercents]]</span>
+                            <span class="progress-line">
+                                <span class="progress-value" style="width: [[checklist.completedPercents]]"></span>
+                            </span>
+                        </div>
                         
                         <ul class="checklist" ui-sortable="itemsSortableOptions" ng-model="checklist.items">
                             <li ng-repeat="item in checklist.items">

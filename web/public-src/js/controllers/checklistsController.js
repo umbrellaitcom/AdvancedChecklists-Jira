@@ -272,7 +272,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	 */
 	checklistsCtrl.completeItem = function(checklist, item) {
 		item.checked = !item.checked;
-		
+		checklist.completedPercents = getCompletedPercents( checklist.items );
 		jQuery.post( getEndpointWithToken( appData.endpoints.complete_item ), {
 			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
@@ -326,5 +326,20 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			item.editText = item.text;
 		}
 	};
+	
+	var getCompletedPercents = function(items) {
+		var checked = 0;
+		for (var i in items) {
+			if (items[i].checked) {
+				checked++;
+			}
+		}
+		
+		return Math.round( (checked * 100) / items.length  ) + '%';
+	};
+	
+	for (var i in checklistsCtrl.checklists) {
+		checklistsCtrl.checklists[i].completedPercents = getCompletedPercents( checklistsCtrl.checklists[i].items );
+	}
 
 }]);
