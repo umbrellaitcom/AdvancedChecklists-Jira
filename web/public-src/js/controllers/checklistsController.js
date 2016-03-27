@@ -30,6 +30,12 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	var jwtToken = parseLocation(window.location.search)['jwt'];
 
 	/**
+	 * Initialize error occurred flag
+	 * @type {boolean}
+	 */
+	checklistsCtrl.errorOccurred = false;
+	
+	/**
 	 * Initialized checklists model
 	 */
 	checklistsCtrl.checklists = appData.checklists;
@@ -64,8 +70,11 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				'orders': ids 
 			}, function( response ){
 				if (response.status != true) {
-					alert('fail!');
+					checklistsCtrl.errorOccurred = true;
 				}
+			}).fail(function() {
+				checklistsCtrl.errorOccurred = true;
+				$scope.$apply();
 			});
 		}
 	};
@@ -89,8 +98,11 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				'checklists_sort': checklistsSorts
 			}, function( response ){
 				if (response.status != true) {
-					alert('fail!');
+					checklistsCtrl.errorOccurred = true;
 				}
+			}).fail(function() {
+				checklistsCtrl.errorOccurred = true;
+				$scope.$apply();
 			});
 		}
 	};
@@ -108,7 +120,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			'name': checklistsCtrl.newChecklist.name
 		}, function( response ) {
 			if (response.status != true) {
-				alert('fail!');
+				checklistsCtrl.errorOccurred = true;
 				return;
 			}
 
@@ -125,6 +137,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			checklistsCtrl.newChecklist.name = '';
 			checklistsCtrl.newChecklist.editMode = false;
 
+			$scope.$apply();
+		}).fail(function() {
+			checklistsCtrl.errorOccurred = true;
 			$scope.$apply();
 		});
 	};
@@ -146,13 +161,16 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			'name': checklist.name
 		}, function( response ) {
 			if (response.status != true) {
-				alert('fail!');
+				checklistsCtrl.errorOccurred = true;
 				return;
 			}
 
 			console.log('New checklist name: ' + checklist.name);
 			checklist.editMode = ! checklist.editMode;
 
+			$scope.$apply();
+		}).fail(function() {
+			checklistsCtrl.errorOccurred = true;
 			$scope.$apply();
 		});
 	};
@@ -169,10 +187,13 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 					'id': checklist.id
 				}, function( response ) {
 					if (response.status != true) {
-						alert('fail!');
+						checklistsCtrl.errorOccurred = true;
 					}
 
 					console.log('Removed checklist "'+checklist.name+'" with ID: ' + checklist.id);
+				}).fail(function() {
+					checklistsCtrl.errorOccurred = true;
+					$scope.$apply();
 				});
 				checklistsCtrl.checklists.splice(i,1);
 			}
@@ -194,7 +215,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			'item_text': checklist.newItemText
 		}, function( response ) {
 			if (response.status != true) {
-				alert('fail!');
+				checklistsCtrl.errorOccurred = true;
 				return;
 			}
 
@@ -210,6 +231,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 
 			checklist.newItemText = '';
 
+			$scope.$apply();
+		}).fail(function() {
+			checklistsCtrl.errorOccurred = true;
 			$scope.$apply();
 		});
 	};
@@ -233,13 +257,16 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			'item_text': item.text
 		}, function( response ) {
 			if (response.status != true) {
-				alert('fail!');
+				checklistsCtrl.errorOccurred = true;
 				return;
 			}
 
 			console.log('Updated item "'+item.text+'" with ID: ' + item.id);
 			item.editMode = ! item.editMode;
 
+			$scope.$apply();
+		}).fail(function() {
+			checklistsCtrl.errorOccurred = true;
 			$scope.$apply();
 		});
 	};
@@ -258,10 +285,13 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 					'item_id': item.id
 				}, function( response ) {
 					if (response.status != true) {
-						alert('fail!');
+						checklistsCtrl.errorOccurred = true;
 					}
 
 					console.log('Removed item "'+item.text+'" with ID: ' + item.id + ' in checklist "'+checklist.name+'" with ID: ' + checklist.id);
+				}).fail(function() {
+					checklistsCtrl.errorOccurred = true;
+					$scope.$apply();
 				});
 				checklist.items.splice(i,1);
 				checklist.completedPercents = getCompletedPercents( checklist.items );
@@ -282,7 +312,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			'item_id': item.id
 		}, function( response ) {
 			if (response.status != true) {
-				alert('fail!');
+				checklistsCtrl.errorOccurred = true;
 			}
 
 			if ( response.checked ) {
@@ -290,9 +320,10 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			} else {
 				console.log('Uncompleted item "'+item.text+'" with ID: ' + item.id);
 			}
+		}).fail(function() {
+			checklistsCtrl.errorOccurred = true;
+			$scope.$apply();
 		});
-
-
 	};
 
 	/**

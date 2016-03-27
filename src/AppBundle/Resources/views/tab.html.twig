@@ -33,10 +33,17 @@
     </head>
     <body>
         <section ng-controller="ChecklistsController as checklistsCtrl" id="checklists" class="ac-content checklists-app">
+            
             <div class="new-checklist-wrapper">
                 <input placeholder="Checklist name" on-press-esc="checklistsCtrl.toggleNewChecklistForm()" focus-me="checklistsCtrl.newChecklist.editMode" on-press-enter="checklistsCtrl.addNewChecklist()" ng-model="checklistsCtrl.newChecklist.name"  ng-show="checklistsCtrl.newChecklist.editMode"/>
                 <a ng-show="!checklistsCtrl.newChecklist.editMode" ng-click="checklistsCtrl.toggleNewChecklistForm()" href="#" class="aui-button"><i class="cl-icon-plus"></i> checklist</a>
             </div>
+            
+            <div class="error" ng-show="checklistsCtrl.errorOccurred">
+                <i class="cl-icon-warning"></i>
+                Connection interrupted.
+            </div>
+            
             <div ui-sortable="checklistsSortableOptions" ng-model="checklistsCtrl.checklists" >
                 <div  ng-repeat="checklist in checklistsCtrl.checklists" class="checklists">
                     <div id="checklist-[[ checklist.id ]]" class="checklist-wapper">
