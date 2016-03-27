@@ -203,6 +203,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				'text': checklist.newItemText,
 				'editText': checklist.newItemText
 			});
+			checklist.completedPercents = getCompletedPercents( checklist.items );
 
 			console.log('Created new item "'+checklist.newItemText+'" with ID: ' + response.item_id);
 
@@ -262,6 +263,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 					console.log('Removed item "'+item.text+'" with ID: ' + item.id + ' in checklist "'+checklist.name+'" with ID: ' + checklist.id);
 				});
 				checklist.items.splice(i,1);
+				checklist.completedPercents = getCompletedPercents( checklist.items );
 			}
 		}
 	};
@@ -272,7 +274,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	 */
 	checklistsCtrl.completeItem = function(checklist, item) {
 		item.checked = !item.checked;
-		
+		checklist.completedPercents = getCompletedPercents( checklist.items );
 		jQuery.post( getEndpointWithToken( appData.endpoints.complete_item ), {
 			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
@@ -326,5 +328,28 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			item.editText = item.text;
 		}
 	};
+
+	/**
+	 * Function return completed percents items in checklist
+	 * @param items
+	 * @returns {string}
+	 */
+	var getCompletedPercents = function(items) {
+		var checked = 0;
+		for (var i in items) {
+			if (items[i].checked) {
+				checked++;
+			}
+		}
+		
+		return Math.round( (checked * 100) / items.length  ) + '%';
+	};
+
+	/**
+	 * Loop all checklists and init completed percents
+	 */
+	for (var i in checklistsCtrl.checklists) {
+		checklistsCtrl.checklists[i].completedPercents = getCompletedPercents( checklistsCtrl.checklists[i].items );
+	}
 
 }]);
