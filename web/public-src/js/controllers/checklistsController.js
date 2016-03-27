@@ -1,8 +1,33 @@
 'use strict';
 
-var checklistsController = angularApplication.controller('ChecklistsController', function($scope, $element) {
+var checklistsController = angularApplication.controller('ChecklistsController', ["$scope", function($scope) {
 	var checklistsCtrl = this;
 	var appData = window.checklistsData;
+
+	/**
+	 * Initialized JWT token 
+	 * @param location
+	 * @returns {{}}
+	 */
+	var parseLocation = function(location) {
+		var pairs = location.substring(1).split("&");
+		var obj = {};
+		var pair;
+		var i;
+
+		for ( i in pairs ) {
+			if ( pairs[i] === "" ) continue;
+
+			pair = pairs[i].split("=");
+			obj[ decodeURIComponent( pair[0] ) ] = decodeURIComponent( pair[1] );
+		}
+
+		return obj;
+	};
+	var getEndpointWithToken = function( endpoint ) {
+		return endpoint + '?jwt=' + jwtToken;
+	};
+	var jwtToken = parseLocation(window.location.search)['jwt'];
 
 	/**
 	 * Initialized checklists model
@@ -34,7 +59,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				ids.push( checklistsCtrl.checklists[i].id );
 			}
 			
-			jQuery.post( appData.endpoints.order_checklist, {
+			jQuery.post( getEndpointWithToken( appData.endpoints.order_checklist ), {
 				'issue_id': appData.issue_id,
 				'orders': ids 
 			}, function( response ){
@@ -59,7 +84,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			}
 			
 			//console.log(checklistsSorts);
-			jQuery.post( appData.endpoints.order_items, {
+			jQuery.post( getEndpointWithToken( appData.endpoints.order_items ), {
 				'issue_id': appData.issue_id,
 				'checklists_sort': checklistsSorts
 			}, function( response ){
@@ -78,7 +103,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			return;
 		}
 		
-		jQuery.post( appData.endpoints.create_checklist, {
+		jQuery.post( getEndpointWithToken( appData.endpoints.create_checklist ), {
 			'issue_id': appData.issue_id,
 			'name': checklistsCtrl.newChecklist.name
 		}, function( response ) {
@@ -114,7 +139,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		}
 		
 		checklist.name = checklist.editName;
-		jQuery.post( appData.endpoints.update_checklist, {
+		jQuery.post( getEndpointWithToken( appData.endpoints.update_checklist ), {
 			'issue_id': appData.issue_id,
 			'id': checklist.id,
 			'name': checklist.name
@@ -138,7 +163,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	checklistsCtrl.removeChecklist = function( checklist ) {
 		for ( var i in checklistsCtrl.checklists ) {
 			if (checklistsCtrl.checklists[i].id == checklist.id) {
-				jQuery.post( appData.endpoints.remove_checklist, {
+				jQuery.post( getEndpointWithToken( appData.endpoints.remove_checklist ), {
 					'issue_id': appData.issue_id,
 					'id': checklist.id
 				}, function( response ) {
@@ -162,7 +187,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			return;
 		}
 		
-		jQuery.post( appData.endpoints.create_item, {
+		jQuery.post( getEndpointWithToken( appData.endpoints.create_item ), {
 			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
 			'item_text': checklist.newItemText
@@ -199,7 +224,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 
 		item.text = item.editText;
 		
-		jQuery.post( appData.endpoints.update_item, {
+		jQuery.post( getEndpointWithToken( appData.endpoints.update_item ), {
 			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
 			'item_id': item.id,
@@ -225,7 +250,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	checklistsCtrl.removeItem = function( checklist, item ) {
 		for ( var i in checklist.items ) {
 			if ( checklist.items[i].id == item.id ) {
-				jQuery.post( appData.endpoints.remove_item, {
+				jQuery.post( getEndpointWithToken( appData.endpoints.remove_item ), {
 					'issue_id': appData.issue_id,
 					'checklist_id': checklist.id,
 					'item_id': item.id
@@ -248,7 +273,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	checklistsCtrl.completeItem = function(checklist, item) {
 		item.checked = !item.checked;
 		
-		jQuery.post( appData.endpoints.complete_item, {
+		jQuery.post( getEndpointWithToken( appData.endpoints.complete_item ), {
 			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
 			'item_id': item.id
@@ -302,4 +327,4 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		}
 	};
 
-});
+}]);
