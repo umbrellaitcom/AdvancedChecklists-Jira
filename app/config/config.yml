@@ -68,7 +68,7 @@ swiftmailer:
 # Atlassian Connect Configuration
 atlassian_connect:
     prod:
-        key: 'com.umbrella-web.advancedchecklists'
+        key: 'com.advancedchecklists.checklists'
         name: 'Advanced Checklists'
         description: 'Advanced checklists add-on for jira'
         vendor:
