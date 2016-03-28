@@ -106,6 +106,10 @@ body {
         background-color: white;
 
         label {
+          width: 90%;
+          display: inline-block;
+          cursor: pointer;
+          
           &.done {
             text-decoration: line-through;
             color: #8c8c8c;

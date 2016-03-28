@@ -72,7 +72,7 @@
                                 <i ng-show="!item.checked" ng-click="checklistsCtrl.completeItem(checklist, item)" class="cl-icon-checkbox-unchecked"></i>
                                 <i ng-show="item.checked" ng-click="checklistsCtrl.completeItem(checklist, item)" class="cl-icon-checkbox-checked"></i>
                                 
-                                <label ng-click="checklistsCtrl.toggleItemEditMode(item)" ng-show="!item.editMode" ng-class="{done: item.checked}" ng-bind-html="item.parsedText"></label>
+                                <label ng-click="checklistsCtrl.toggleItemEditMode(item, $event)" ng-show="!item.editMode" ng-class="{done: item.checked}" ng-bind-html="item.parsedText"></label>
                                 
                                 <i ng-show="(item.editText != item.text) && (! item.editMode)" title="value is changed but not saved" class="cl-icon-warning"></i>
                                 
