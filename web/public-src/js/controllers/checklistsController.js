@@ -35,14 +35,26 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	 */
 	checklistsCtrl.errorOccurred = false;
 
+	/**
+	 * Function parsed plain text and return html with replaced entries
+	 * @param text
+	 * @returns {string}
+	 */
 	var parseItemText = function( text ) {
+		// split text to words by space
 		var words = text.split(' ');
+		
+		// loop all words and try find entries
 		for ( var i in words ) {
+			// replace urls to html <a></a> tag
 			words[i] = words[i].replace(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\?[^ ]*)?$/ig, function(url, isHttpDetected ){
 				var text = url;
+				
+				// auto add http protocol
 				if ( ! isHttpDetected ) {
 					url = 'http://' + url;
 				}
+				
 				return '<a target="_blank" href="'+url+'">'+text+'</a>';
 			});
 		}
