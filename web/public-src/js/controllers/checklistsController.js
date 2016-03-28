@@ -86,7 +86,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	};
 
 	$scope.checklistsSortableOptions = {
-		handle: '.checklist-wapper i.cl-icon-notebook-list',
+		handle: '.checklist-wapper div.header-checklist',
 		stop: function(e) {
 			var ids = [];
 			for (var i in checklistsCtrl.checklists ) {
