@@ -1,6 +1,6 @@
 'use strict';
 
-var checklistsController = angularApplication.controller('ChecklistsController', ["$scope", function($scope) {
+var checklistsController = angularApplication.controller('ChecklistsController', ["$scope", "$sce", function($scope, $sce) {
 	var checklistsCtrl = this;
 	var appData = window.checklistsData;
 
@@ -34,6 +34,33 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	 * @type {boolean}
 	 */
 	checklistsCtrl.errorOccurred = false;
+
+	/**
+	 * Function parsed plain text and return html with replaced entries
+	 * @param text
+	 * @returns {string}
+	 */
+	var parseItemText = function( text ) {
+		// split text to words by space
+		var words = text.split(' ');
+		
+		// loop all words and try find entries
+		for ( var i in words ) {
+			// replace urls to html <a></a> tag
+			words[i] = words[i].replace(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\?[^ ]*)?$/ig, function(url, isHttpDetected ){
+				var text = url;
+				
+				// auto add http protocol
+				if ( ! isHttpDetected ) {
+					url = 'http://' + url;
+				}
+				
+				return '<a target="_blank" href="'+url+'">'+text+'</a>';
+			});
+		}
+		
+		return words.join(' ');
+	};
 	
 	/**
 	 * Initialized checklists model
@@ -45,6 +72,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		
 		for ( var j in checklistsCtrl.checklists[i].items ) {
 			checklistsCtrl.checklists[i].items[j].editText = checklistsCtrl.checklists[i].items[j].text;
+			checklistsCtrl.checklists[i].items[j].parsedText = $sce.trustAsHtml( parseItemText( checklistsCtrl.checklists[i].items[j].text ) );
 		}
 	}
 
@@ -223,7 +251,8 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				'id': response.item_id,
 				checked: false,
 				'text': checklist.newItemText,
-				'editText': checklist.newItemText
+				'editText': checklist.newItemText,
+				'parsedText': $sce.trustAsHtml( parseItemText( checklist.newItemText ) )
 			});
 			checklist.completedPercents = getCompletedPercents( checklist.items );
 
@@ -249,6 +278,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		}
 
 		item.text = item.editText;
+		item.parsedText = $sce.trustAsHtml( parseItemText( item.editText ) );
 		
 		jQuery.post( getEndpointWithToken( appData.endpoints.update_item ), {
 			'issue_id': appData.issue_id,
@@ -353,7 +383,10 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	 * Toggle item edit mode
 	 * @param item
 	 */
-	checklistsCtrl.toggleItemEditMode = function( item ) {
+	checklistsCtrl.toggleItemEditMode = function( item, $event ) {
+		if ( typeof $event != 'undefined' && angular.element($event.target).is('a') ) {
+			return;
+		}
 		item.editMode = ! item.editMode;
 		
 		if ( item.editMode && ! item.editText ) {
@@ -386,5 +419,5 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	for (var i in checklistsCtrl.checklists) {
 		checklistsCtrl.checklists[i].completedPercents = getCompletedPercents( checklistsCtrl.checklists[i].items );
 	}
-
+	
 }]);

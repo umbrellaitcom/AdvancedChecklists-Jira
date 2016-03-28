@@ -12,6 +12,6 @@ $(function(){
 });
 
 
-var angularApplication = angular.module('checklistsApp', ['ui.sortable']).config(function($interpolateProvider){
+var angularApplication = angular.module('checklistsApp', ['ui.sortable', 'ngSanitize']).config(function($interpolateProvider){
 		$interpolateProvider.startSymbol('[[').endSymbol(']]');
 });
