@@ -38,7 +38,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysqli
+        driver:   mysqli
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
