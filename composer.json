@@ -28,6 +28,10 @@
         "symfony/phpunit-bridge": "~2.7"
     },
     "scripts": {
+        "warmup": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+        ],
         "post-install-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
@@ -56,7 +60,13 @@
         "symfony-web-dir": "web",
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
+            "file": "app/config/parameters.yml",
+            "env-map": {
+                "database_name": "heroku_befc88fe90782bd",
+                "database_user": "b97fc78f542acf",
+                "database_password": "319d3889",
+                "database_host": "mysql://b97fc78f542acf:319d3889@us-cdbr-iron-east-03.cleardb.net/heroku_befc88fe90782bd?reconnect=true"
+            }
         }
     }
 }
