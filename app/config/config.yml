@@ -74,7 +74,7 @@ atlassian_connect:
         vendor:
             name: 'Umbrella Web'
             url: 'http://umbrella-web.com/'
-        baseUrl: 'https://advancedchecklists.com/'
+        baseUrl: 'https://advanced-checklists-jira.herokuapp.com/'
         lifecycle:
             installed: '/handshake'
         scopes: ['READ', 'WRITE']
