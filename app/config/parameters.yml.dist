@@ -2,11 +2,11 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    database_host:     ~
+    database_host:     us-cdbr-iron-east-03.cleardb.net
     database_port:     ~
-    database_name:     ~
-    database_user:     ~
-    database_password: ~
+    database_name:     heroku_befc88fe90782bd
+    database_user:     b97fc78f542acf
+    database_password: 319d3889
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 
