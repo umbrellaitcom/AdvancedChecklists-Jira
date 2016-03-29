@@ -65,7 +65,7 @@
                 "database_name": "heroku_befc88fe90782bd",
                 "database_user": "b97fc78f542acf",
                 "database_password": "319d3889",
-                "database_host": "us-cdbr-iron-east-03.cleardb.net/heroku_befc88fe90782bd"
+                "database_host": "us-cdbr-iron-east-03.cleardb.net"
             }
         }
     }
