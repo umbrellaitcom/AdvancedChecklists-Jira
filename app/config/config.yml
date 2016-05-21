@@ -89,3 +89,6 @@ atlassian_connect:
                     supports-ajax-load: true
                     name:
                         value: 'Checklists' 
+    dev:
+        baseUrl: 'http://localhost:8888'
+                    
