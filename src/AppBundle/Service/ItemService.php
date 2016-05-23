@@ -32,9 +32,10 @@ class ItemService
      * @param Issue $issue
      * @param $checklistId
      * @param $itemText
+     * @param $color
      * @return Item|bool
      */
-    public function createNewItem(Issue $issue, $checklistId, $itemText) 
+    public function createNewItem(Issue $issue, $checklistId, $itemText, $color) 
     {
         $checklistWithNewItem = false;
         foreach ( $issue->getChecklists() as $checklist ) {
@@ -51,6 +52,7 @@ class ItemService
         $newItem->setChecked( false );
         $newItem->setChecklist( $checklistWithNewItem );
         $newItem->setText( $itemText );
+        $newItem->setColor( $color );
         
         // detect sort
         $sort = 0;
@@ -77,7 +79,7 @@ class ItemService
      * @param $newItemText
      * @return bool
      */
-    public function updateItem(Issue $issue, $checklistId, $itemId, $newItemText)
+    public function updateItem(Issue $issue, $checklistId, $itemId, $newItemText, $color)
     {
         $checklistToUpdate = false;
         foreach ( $issue->getChecklists() as $checklist ) {
@@ -102,6 +104,8 @@ class ItemService
         }
 
         $itemToUpdate->setText($newItemText);
+        $itemToUpdate->setColor($color);
+        
         $this->em->flush();
         
         return true;

@@ -23,6 +23,7 @@ class ItemController extends Controller
         $issueId = $request->request->get('issue_id');
         $checklistId = $request->request->get('checklist_id');
         $itemText = $request->request->get('item_text');
+        $color = $request->request->get('color');
         
         if ( ! $issueId OR ! $checklistId OR ! $itemText ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
@@ -33,7 +34,7 @@ class ItemController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
         
-        $item = $this->get('item')->createNewItem($issue, $checklistId, $itemText);
+        $item = $this->get('item')->createNewItem($issue, $checklistId, $itemText, $color);
         return new JsonResponse( array('status' => (bool)$item, 'item_id' => $item ? $item->getId() : 0 ) );
     }
 
@@ -54,6 +55,7 @@ class ItemController extends Controller
         $checklistId = $request->request->get('checklist_id');
         $itemId = $request->request->get('item_id');
         $newItemText = $request->request->get('item_text');
+        $color = $request->request->get('color');
 
         if ( ! $issueId OR ! $checklistId OR ! $itemId OR ! $newItemText ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
@@ -64,7 +66,7 @@ class ItemController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
 
-        $result = $this->get('item')->updateItem($issue, $checklistId, $itemId, $newItemText);
+        $result = $this->get('item')->updateItem($issue, $checklistId, $itemId, $newItemText, $color);
         return new JsonResponse( array('status' => $result) );
     }
     
