@@ -85,7 +85,7 @@ atlassian_connect:
                  -
                     url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
                     location: 'atl.jira.view.issue.right.context'
-                    key: "checklists-preview-issue"
+                    key: 'checklists-preview-issue'
                     name:
                         value: 'Checklists'
     dev:
