@@ -237,10 +237,16 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			return;
 		}
 		
+		var selectedColor = checklist.newItemColor;
+		if ( ! selectedColor ) {
+			selectedColor = '#000000';
+		}
+		
 		jQuery.post( getEndpointWithToken( appData.endpoints.create_item ), {
 			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
-			'item_text': checklist.newItemText
+			'item_text': checklist.newItemText,
+			'color': selectedColor
 		}, function( response ) {
 			if (response.status != true) {
 				checklistsCtrl.errorOccurred = true;
@@ -252,7 +258,8 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				checked: false,
 				'text': checklist.newItemText,
 				'editText': checklist.newItemText,
-				'parsedText': $sce.trustAsHtml( parseItemText( checklist.newItemText ) )
+				'parsedText': $sce.trustAsHtml( parseItemText( checklist.newItemText ) ),
+				'color': selectedColor
 			});
 			checklist.completedPercents = getCompletedPercents( checklist.items );
 
@@ -272,19 +279,21 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	 * @param item
 	 */
 	checklistsCtrl.updateItem = function( checklist, item ) {
-		if ( item.editText == item.text ) {
+		if ( item.editText == item.text && item.editColor == item.color ) {
 			item.editMode = ! item.editMode;
 			return;
 		}
 
 		item.text = item.editText;
+		item.color = item.editColor;
 		item.parsedText = $sce.trustAsHtml( parseItemText( item.editText ) );
 		
 		jQuery.post( getEndpointWithToken( appData.endpoints.update_item ), {
 			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
 			'item_id': item.id,
-			'item_text': item.text
+			'item_text': item.text,
+			'color': item.color
 		}, function( response ) {
 			if (response.status != true) {
 				checklistsCtrl.errorOccurred = true;
@@ -391,6 +400,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		
 		if ( item.editMode && ! item.editText ) {
 			item.editText = item.text;
+		}
+		if ( item.editMode && ! item.editColor ) {
+			item.editColor = item.color
 		}
 	};
 

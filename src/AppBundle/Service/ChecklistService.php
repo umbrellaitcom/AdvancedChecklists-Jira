@@ -45,6 +45,7 @@ class ChecklistService
                 $itData->id = $item->getId();
                 $itData->text = $item->getText();
                 $itData->checked = $item->getChecked();
+                $itData->color = $item->getColor();
                 $clData->items[] = $itData;
             }
             

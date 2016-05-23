@@ -72,15 +72,27 @@
                                 <i ng-show="!item.checked" ng-click="checklistsCtrl.completeItem(checklist, item)" class="cl-icon-checkbox-unchecked"></i>
                                 <i ng-show="item.checked" ng-click="checklistsCtrl.completeItem(checklist, item)" class="cl-icon-checkbox-checked"></i>
                                 
-                                <label ng-click="checklistsCtrl.toggleItemEditMode(item, $event)" ng-show="!item.editMode" ng-class="{done: item.checked}" ng-bind-html="item.parsedText"></label>
+                                <label ng-style="{color: item.color}" ng-click="checklistsCtrl.toggleItemEditMode(item, $event)" ng-show="!item.editMode" ng-class="{done: item.checked}" ng-bind-html="item.parsedText"></label>
                                 
                                 <i ng-show="(item.editText != item.text) && (! item.editMode)" title="value is changed but not saved" class="cl-icon-warning"></i>
                                 
                                 <input focus-me="item.editMode" on-press-esc="checklistsCtrl.toggleItemEditMode(item)" on-press-enter="checklistsCtrl.updateItem( checklist, item )" ng-show="item.editMode" ng-model="item.editText" />
+                                
+                                {# Color picker #}
+                                <span class="cl-colorpicker" ng-show="item.editMode">
+                                    <a colorpicker ng-model="item.editColor"><i class="cl-icon-color"></i></a>
+                                </span>
+                                
                                 <a href="#" ng-click="checklistsCtrl.removeItem(checklist, item)" ng-show="item.editMode" class="cl-remove-link">Remove</a>
                             </li>
                             <li class="add-new-item-link">
                                 <input placeholder="Item name" focus-me="checklist.newItemEditMode" on-press-enter="checklistsCtrl.addNewItem( checklist )" on-press-esc="checklistsCtrl.toggleNeItemEditMode( checklist )" ng-show="checklist.newItemEditMode" ng-model="checklist.newItemText"/>
+                                
+                                {# Color picker #}
+                                <span class="cl-colorpicker" ng-show="checklist.newItemEditMode">
+                                    <a colorpicker ng-model="checklist.newItemColor"><i class="cl-icon-color"></i></a>
+                                </span>
+                                
                                 <a href="#" ng-show="!checklist.newItemEditMode" ng-click="checklistsCtrl.toggleNeItemEditMode( checklist )">Add an item...</a>
                             </li>
                         </ul>

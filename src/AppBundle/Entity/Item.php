@@ -43,6 +43,11 @@ class Item
      * @ORM\Column(name="sort", type="integer")
      */
     private $sort;
+
+    /**
+     * @ORM\Column(name="color", type="string", length=7)
+     */
+    private $color;
     
     /**
      * Get id
@@ -148,5 +153,33 @@ class Item
     public function getSort()
     {
         return $this->sort;
+    }
+
+    /**
+     * Set color
+     *
+     * @param string $color
+     *
+     * @return Item
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
+     * Get color
+     *
+     * @return string
+     */
+    public function getColor()
+    {
+        if ( ! $this->color ) {
+            return '#000000';
+        }
+        
+        return $this->color;
     }
 }
