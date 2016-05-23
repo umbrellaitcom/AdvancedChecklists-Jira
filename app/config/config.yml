@@ -89,16 +89,13 @@ atlassian_connect:
                     supports-ajax-load: true
                     name:
                         value: 'Checklists' 
-            "webPanels": [
-                 {
+            "webPanels": 
+                 -
                     url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
                     location: 'atl.jira.view.issue.right.context'
                     key: "checklists-preview-issue"
-                    name: {
+                    name:
                         value: 'Checklists'
-                    }
-                 }
-            ]            
     dev:
         baseUrl: 'http://localhost:8888'
                     
