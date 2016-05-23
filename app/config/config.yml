@@ -81,14 +81,6 @@ atlassian_connect:
         authentication:
             type: 'jwt'
         modules:
-            jiraIssueTabPanels:
-                 -
-                    key: 'checklists-tab'
-                    url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
-                    weight: 100
-                    supports-ajax-load: true
-                    name:
-                        value: 'Checklists' 
             "webPanels": 
                  -
                     url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
