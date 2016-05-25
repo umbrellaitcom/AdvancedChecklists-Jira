@@ -418,7 +418,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	 * Toggle new checklist form
 	 */
 	checklistsCtrl.toggleNewChecklistForm = function() {
-		disableAllEditModes();
+		if ( ! checklistsCtrl.newChecklist.editMode ) {
+			disableAllEditModes();
+		}
 		checklistsCtrl.newChecklist.editMode = ! checklistsCtrl.newChecklist.editMode;
 	};
 
@@ -427,7 +429,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	 * @param checklist
 	 */
 	checklistsCtrl.toggleChecklistEdit = function( checklist ) {
-		disableAllEditModes();
+		if ( ! checklist.editMode ) {
+			disableAllEditModes();
+		}
 		checklist.editMode = ! checklist.editMode;
 		
 		if ( checklist.editMode && ! checklist.editName ) {
@@ -436,7 +440,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	};
 	
 	checklistsCtrl.toggleNeItemEditMode = function( checklist ) {
-		disableAllEditModes();
+		if ( ! checklist.newItemEditMode ) {
+			disableAllEditModes();
+		}
 		checklist.newItemEditMode = ! checklist.newItemEditMode;
 	};
 
@@ -448,7 +454,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		if ( typeof $event != 'undefined' && angular.element($event.target).is('a') ) {
 			return;
 		}
-		disableAllEditModes();
+		if ( ! item.editMode ) {
+			disableAllEditModes();
+		}
 		item.editMode = ! item.editMode;
 		
 		if ( item.editMode && ! item.editText ) {
