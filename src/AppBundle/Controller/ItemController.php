@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ItemController extends Controller
 {
     /**
-     * @Route("/project/{projectKey}/issue/{issueKey}/item/create", name="checklists-item-create")
+     * @Route("/api/project/{projectKey}/issue/{issueKey}/item/create", name="checklists-item-create")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -29,7 +29,7 @@ class ItemController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($this->getUser()->getClientKey(), $projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -39,7 +39,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/project/{projectKey}/issue/{issueKey}/item/update", name="checklists-item-update")
+     * @Route("/api/project/{projectKey}/issue/{issueKey}/item/update", name="checklists-item-update")
      * @param Request $request
      * @param $projectKey
      * @param $issueKey
@@ -61,7 +61,7 @@ class ItemController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($this->getUser()->getClientKey(), $projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -71,7 +71,7 @@ class ItemController extends Controller
     }
     
     /**
-     * @Route("/project/{projectKey}/issue/{issueKey}/item/remove", name="checklists-item-remove")
+     * @Route("/api/project/{projectKey}/issue/{issueKey}/item/remove", name="checklists-item-remove")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -89,7 +89,7 @@ class ItemController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($this->getUser()->getClientKey(), $projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -99,7 +99,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/project/{projectKey}/issue/{issueKey}/item/complete", name="checklists-item-complete")
+     * @Route("/api/project/{projectKey}/issue/{issueKey}/item/complete", name="checklists-item-complete")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -117,7 +117,7 @@ class ItemController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($this->getUser()->getClientKey(), $projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -132,7 +132,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/project/{projectKey}/issue/{issueKey}/item/sortable", name="checklists-item-sortable")
+     * @Route("/api/project/{projectKey}/issue/{issueKey}/item/sortable", name="checklists-item-sortable")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -149,7 +149,7 @@ class ItemController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($this->getUser()->getClientKey(), $projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
