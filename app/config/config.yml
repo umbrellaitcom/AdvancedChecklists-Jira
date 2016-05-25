@@ -87,7 +87,12 @@ atlassian_connect:
                     location: 'atl.jira.view.issue.right.context'
                     key: "checklists-preview-issue"
                     name:
-                        value: 'Checklists'
+                        value: 'Checklists' 
+                 -
+                    key: 'checklists-preview-mode'
+                    url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
+                    name:
+                        value: 'Checklists' 
     dev:
         baseUrl: 'http://localhost:8888'
                     
