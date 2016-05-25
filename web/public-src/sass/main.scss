@@ -30,6 +30,13 @@ body {
   background-color: #ffffff;
   height: 100%;
   
+  div.total-wrapper {
+    margin-left: 8px;
+    .complete {
+      color: #61bd4f;
+    }
+  }
+  
   div.new-checklist-wrapper {
     float: right;
     margin: 10px;
