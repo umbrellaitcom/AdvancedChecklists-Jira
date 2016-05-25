@@ -41,7 +41,7 @@
             
             {#Total of open/close items#}
             <div class="total-wrapper">
-                <b>Total:</b> <span ng-class="{complete: checklistsCtrl.total.open == checklistsCtrl.total.all}">[[checklistsCtrl.total.open]]/[[checklistsCtrl.total.all]]</span>
+                <b>Total:</b> <span ng-class="{complete: checklistsCtrl.total.open == checklistsCtrl.total.all && checklistsCtrl.total.open != 0 }">[[checklistsCtrl.total.open]]/[[checklistsCtrl.total.all]]</span>
             </div>
             
             <div class="error" ng-show="checklistsCtrl.errorOccurred">

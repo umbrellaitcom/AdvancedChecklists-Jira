@@ -244,6 +244,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 					}
 
 					console.log('Removed checklist "'+checklist.name+'" with ID: ' + checklist.id);
+
+					// re-calc total of items
+					calcTotal();
 				}).fail(function() {
 					checklistsCtrl.errorOccurred = true;
 					$scope.$apply();
