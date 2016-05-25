@@ -90,7 +90,7 @@ atlassian_connect:
                         value: 'Checklists' 
                  -
                     key: 'checklists-preview-mode'
-                    location: "atl.gh.issue.details.tab",
+                    location: 'atl.gh.issue.details.tab'
                     url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
                     name:
                         value: 'Checklists' 
