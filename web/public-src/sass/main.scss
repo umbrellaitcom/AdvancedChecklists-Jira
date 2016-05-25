@@ -16,15 +16,26 @@ body {
     min-width: 230px;
   }
 
-  a.cl-remove-link {
-    font-size: 14px;
-    color: #BF0808;
-    display: inline-block;
-    cursor: pointer;
-    margin: 0;
-    padding: 4px 4px;
-    vertical-align: baseline;
-    white-space: nowrap;
+  div.cl-actions {
+    padding-left: 32px;
+    &.cl-actions-items {
+      padding-left: 23px;
+    }
+    
+    a.cl-link {
+      font-size: 14px;
+      display: inline-block;
+      cursor: pointer;
+      margin: 0;
+      color: black;
+      padding: 4px 0px;
+      vertical-align: baseline;
+      white-space: nowrap;
+      text-decoration: none;
+      &:hover {
+        text-decoration: none;
+      }
+    }
   }
   
   background-color: #ffffff;

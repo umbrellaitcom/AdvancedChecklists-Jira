@@ -57,7 +57,12 @@
                             <i class="cl-icon-notebook-list"></i>
                             
                             <input ng-show="checklist.editMode" on-press-esc="checklistsCtrl.toggleChecklistEdit( checklist )" on-press-enter="checklistsCtrl.updateChecklist( checklist )" focus-me="checklist.editMode" ng-model="checklist.editName" />
-                            <a ng-show="checklist.editMode" class="cl-remove-link" href="#" ng-click="checklistsCtrl.removeChecklist( checklist )">Remove</a>
+                            
+                            <div ng-show="checklist.editMode" class="cl-actions">
+                                <a class="cl-link" href="#" ng-click="checklistsCtrl.updateChecklist( checklist )"><i class="cl-icon-save"></i></a>
+                                <a class="cl-link" href="#" ng-click="checklistsCtrl.toggleChecklistEdit( checklist )"><i class="cl-icon-cross"></i></a>
+                                <a class="cl-link" href="#" ng-click="checklistsCtrl.removeChecklist( checklist )"><i class="cl-icon-trash"></i></a>
+                            </div>
                             
                             <span ng-show="!checklist.editMode" ng-click="checklistsCtrl.toggleChecklistEdit( checklist )" class="checklist-name">[[ checklist.name ]]</span>
                             
@@ -82,13 +87,13 @@
                                 <i ng-show="(item.editText != item.text) && (! item.editMode)" title="value is changed but not saved" class="cl-icon-warning"></i>
                                 
                                 <input focus-me="item.editMode" on-press-esc="checklistsCtrl.toggleItemEditMode(item)" on-press-enter="checklistsCtrl.updateItem( checklist, item )" ng-show="item.editMode" ng-model="item.editText" />
-                                
-                                {# Color picker #}
-                                <span class="cl-colorpicker" ng-show="item.editMode">
-                                    <a colorpicker colorpicker-position="left" ng-model="item.editColor"><i class="cl-icon-color"></i></a>
-                                </span>
-                                
-                                <a href="#" ng-click="checklistsCtrl.removeItem(checklist, item)" ng-show="item.editMode" class="cl-remove-link">Remove</a>
+
+                                <div ng-show="item.editMode" class="cl-actions cl-actions-items">
+                                    <a colorpicker colorpicker-position="right" ng-model="item.editColor" class="cl-link"><i class="cl-icon-color"></i></a>
+                                    <a href="#" ng-click="checklistsCtrl.updateItem( checklist, item )" class="cl-link"><i class="cl-icon-save"></i></a>
+                                    <a href="#" ng-click="checklistsCtrl.toggleItemEditMode(item)" class="cl-link"><i class="cl-icon-cross"></i></a>
+                                    <a href="#" ng-click="checklistsCtrl.removeItem(checklist, item)" class="cl-link"><i class="cl-icon-trash"></i></a>
+                                </div>
                             </li>
                             <li class="add-new-item-link">
                                 <input placeholder="Item name" focus-me="checklist.newItemEditMode" on-press-enter="checklistsCtrl.addNewItem( checklist )" on-press-esc="checklistsCtrl.toggleNeItemEditMode( checklist )" ng-show="checklist.newItemEditMode" ng-model="checklist.newItemText"/>
