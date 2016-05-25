@@ -89,6 +89,11 @@ atlassian_connect:
                     supports-ajax-load: true
                     name:
                         value: 'Checklists' 
+                 -
+                    key: 'checklists-preview-mode'
+                    url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
+                    name:
+                        value: 'Checklists' 
     dev:
         baseUrl: 'http://localhost:8888'
                     
