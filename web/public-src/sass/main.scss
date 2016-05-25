@@ -21,6 +21,9 @@ body {
     &.cl-actions-items {
       padding-left: 23px;
     }
+    &.cl-actions-add-item {
+      padding-left: 0px;
+    }
     
     a.cl-link {
       font-size: 14px;
