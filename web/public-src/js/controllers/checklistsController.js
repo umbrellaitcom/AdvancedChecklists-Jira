@@ -157,7 +157,8 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				'name': checklistsCtrl.newChecklist.name,
 				'editName': checklistsCtrl.newChecklist.name,
 				'items': [],
-				'completedPercents': "0%"
+				'completedPercents': "0%",
+				'newItemEditMode': true
 			});
 
 			console.log('Created new checklist "'+checklistsCtrl.newChecklist.name+'" with ID: ' + response.checklist_id);
