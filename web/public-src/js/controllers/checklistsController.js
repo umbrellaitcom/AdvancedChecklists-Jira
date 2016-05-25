@@ -109,6 +109,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 
 	$scope.checklistsSortableOptions = {
 		handle: '.checklist-wapper div.header-checklist',
+		axis: 'y',
 		stop: function(e) {
 			var ids = [];
 			for (var i in checklistsCtrl.checklists ) {
@@ -132,6 +133,7 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	$scope.itemsSortableOptions = {
 		items: "li:not(.add-new-item-link)",
 		connectWith: "ul.checklist",
+		axis: 'y',
 		stop: function(e) {
 			var checklistsSorts = {};
 			for (var i in checklistsCtrl.checklists ) {
