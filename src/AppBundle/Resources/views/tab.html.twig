@@ -85,7 +85,7 @@
                                 
                                 {# Color picker #}
                                 <span class="cl-colorpicker" ng-show="item.editMode">
-                                    <a colorpicker ng-model="item.editColor"><i class="cl-icon-color"></i></a>
+                                    <a colorpicker colorpicker-position="left" ng-model="item.editColor"><i class="cl-icon-color"></i></a>
                                 </span>
                                 
                                 <a href="#" ng-click="checklistsCtrl.removeItem(checklist, item)" ng-show="item.editMode" class="cl-remove-link">Remove</a>
@@ -95,7 +95,7 @@
                                 
                                 {# Color picker #}
                                 <span class="cl-colorpicker" ng-show="checklist.newItemEditMode">
-                                    <a colorpicker ng-model="checklist.newItemColor"><i class="cl-icon-color"></i></a>
+                                    <a colorpicker colorpicker-position="left"  ng-model="checklist.newItemColor"><i class="cl-icon-color"></i></a>
                                 </span>
                                 
                                 <a href="#" ng-show="!checklist.newItemEditMode" ng-click="checklistsCtrl.toggleNeItemEditMode( checklist )">Add an item...</a>

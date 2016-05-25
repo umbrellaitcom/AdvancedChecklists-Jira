@@ -296,6 +296,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 
 			console.log('Created new item "'+checklist.newItemText+'" with ID: ' + response.item_id);
 
+			// reset selected color
+			checklist.newItemColor = '#000000';
+			
 			checklist.newItemText = '';
 
 			$scope.$apply();
