@@ -81,14 +81,19 @@ atlassian_connect:
         authentication:
             type: 'jwt'
         modules:
-            jiraIssueTabPanels:
-                 -
-                    key: 'checklists-tab'
+            "webPanels": 
+                 -   
                     url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
-                    weight: 100
-                    supports-ajax-load: true
+                    location: 'atl.jira.view.issue.right.context'
+                    key: 'checklists-preview-issue'
                     name:
-                        value: 'Checklists' 
+                        value: 'Checklists'
+                 -
+                    key: 'checklists-preview-mode'
+                    location: 'atl.gh.issue.details.tab'
+                    url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
+                    name:
+                        value: 'Checklists'
     dev:
         baseUrl: 'http://localhost:8888'
                     
