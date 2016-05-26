@@ -21,7 +21,7 @@ class ViewController extends Controller
         /**
          * Retrieve Issue
          */
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($this->getUser()->getClientKey(), $projectKey, $request->query->get('issue_id'), $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $request->query->get('issue_id'), $issueKey);
         if ( ! $issue ) {
             $issue = $this->get('issue')->createIssue($projectKey, $issueKey, $request, $this->getUser());
         }
