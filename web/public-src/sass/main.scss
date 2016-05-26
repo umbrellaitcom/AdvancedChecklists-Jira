@@ -2,6 +2,8 @@
 @import 'common/icon';
 @import "compass/css3";
 
+@import "libs/colorpicker";
+
 body {
   background-color: white !important;
 }
@@ -135,6 +137,17 @@ body {
           &.done {
             text-decoration: line-through;
             color: #8c8c8c;
+          }
+        }
+        
+        span.cl-colorpicker {
+          a {
+            text-decoration: none;
+            color: #000;
+            cursor: pointer;
+            &:hover {
+              text-decoration: none;
+            }
           }
         }
       }

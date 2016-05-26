@@ -6,7 +6,7 @@
         
         {# Styles #}
         <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.12/css/aui.min.css" media="all">
-        <link rel="stylesheet" href="/public/css/main.css?ver=1.5">
+        <link rel="stylesheet" href="/public/css/main.css?ver=1.6">
         
         {# Initialized checklists data #}
         <script>
@@ -29,7 +29,7 @@
         
         {# Load scripts #}
         <script src="{{ baseUrl }}/atlassian-connect/all.js" type="text/javascript"></script>
-        <script src="/public/js/app.min.js?ver=1.5"></script>
+        <script src="/public/js/app.min.js?ver=1.6"></script>
     </head>
     <body>
         <section ng-controller="ChecklistsController as checklistsCtrl" id="checklists" class="ac-content checklists-app">
@@ -87,13 +87,14 @@
                                 <i ng-show="!item.checked" ng-click="checklistsCtrl.completeItem(checklist, item)" class="cl-icon-checkbox-unchecked"></i>
                                 <i ng-show="item.checked" ng-click="checklistsCtrl.completeItem(checklist, item)" class="cl-icon-checkbox-checked"></i>
                                 
-                                <label ng-click="checklistsCtrl.toggleItemEditMode(item, $event)" ng-show="!item.editMode" ng-class="{done: item.checked}" ng-bind-html="item.parsedText"></label>
+                                <label ng-style="{color: item.color}" ng-click="checklistsCtrl.toggleItemEditMode(item, $event)" ng-show="!item.editMode" ng-class="{done: item.checked}" ng-bind-html="item.parsedText"></label>
                                 
                                 <i ng-show="(item.editText != item.text) && (! item.editMode)" title="value is changed but not saved" class="cl-icon-warning"></i>
                                 
                                 <input focus-me="item.editMode" on-press-esc="checklistsCtrl.toggleItemEditMode(item)" on-press-enter="checklistsCtrl.updateItem( checklist, item )" ng-show="item.editMode" ng-model="item.editText" />
-
+                                
                                 <div ng-show="item.editMode" class="cl-actions cl-actions-items">
+                                    <a colorpicker colorpicker-position="right" ng-model="item.editColor" class="cl-link"><i class="cl-icon-color"></i></a>
                                     <a href="#" ng-click="checklistsCtrl.updateItem( checklist, item )" class="cl-link"><i class="cl-icon-save"></i></a>
                                     <a href="#" ng-click="checklistsCtrl.toggleItemEditMode(item)" class="cl-link"><i class="cl-icon-cross"></i></a>
                                     <a href="#" ng-click="checklistsCtrl.removeItem(checklist, item)" class="cl-link"><i class="cl-icon-trash"></i></a>
@@ -101,9 +102,11 @@
                             </li>
                             <li class="add-new-item-link">
                                 <input placeholder="Item name" focus-me="checklist.newItemEditMode" on-press-enter="checklistsCtrl.addNewItem( checklist )" on-press-esc="checklistsCtrl.toggleNeItemEditMode( checklist )" ng-show="checklist.newItemEditMode" ng-model="checklist.newItemText"/>
+                                
                                 <a href="#" ng-show="!checklist.newItemEditMode" ng-click="checklistsCtrl.toggleNeItemEditMode( checklist )">Add an item...</a>
 
                                 <div ng-show="checklist.newItemEditMode" class="cl-actions cl-actions-add-item">
+                                    <a colorpicker colorpicker-position="right" ng-model="checklist.newItemColor" class="cl-link"><i class="cl-icon-color"></i></a>
                                     <a href="#" ng-click="checklistsCtrl.addNewItem( checklist )" class="cl-link"><i class="cl-icon-save"></i></a>
                                     <a href="#" ng-click="checklistsCtrl.toggleNeItemEditMode( checklist )" class="cl-link"><i class="cl-icon-cross"></i></a>
                                 </div>
