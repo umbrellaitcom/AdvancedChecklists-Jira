@@ -77,6 +77,28 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 	}
 
 	/**
+	 * Initialized total count open/close items
+	 */
+	var calcTotal = function(){
+		setTimeout(function(){
+			checklistsCtrl.total = {};
+			checklistsCtrl.total.open = 0;
+			checklistsCtrl.total.all = 0;
+			for ( var i1 in checklistsCtrl.checklists ) {
+				for ( var j1 in checklistsCtrl.checklists[i1].items ) {
+					if (checklistsCtrl.checklists[i1].items[j1].checked ) {
+						checklistsCtrl.total.open++;
+					}
+					checklistsCtrl.total.all++;
+				}
+			}
+
+			$scope.$apply();
+		}, 50);
+	};
+	calcTotal();
+
+	/**
 	 * Initialized new checklist model
 	 * @type {{name: string}}
 	 */
@@ -221,6 +243,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 					}
 
 					console.log('Removed checklist "'+checklist.name+'" with ID: ' + checklist.id);
+
+					// re-calc total of items
+					calcTotal();
 				}).fail(function() {
 					checklistsCtrl.errorOccurred = true;
 					$scope.$apply();
@@ -257,6 +282,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				'parsedText': $sce.trustAsHtml( parseItemText( checklist.newItemText ) )
 			});
 			checklist.completedPercents = getCompletedPercents( checklist.items );
+
+			// re-calc total of items
+			calcTotal();
 
 			console.log('Created new item "'+checklist.newItemText+'" with ID: ' + response.item_id);
 
@@ -327,6 +355,9 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 				});
 				checklist.items.splice(i,1);
 				checklist.completedPercents = getCompletedPercents( checklist.items );
+
+				// re-calc total of items
+				calcTotal();
 			}
 		}
 	};
@@ -352,6 +383,10 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			} else {
 				console.log('Uncompleted item "'+item.text+'" with ID: ' + item.id);
 			}
+
+			// re-calc total of items
+			calcTotal();
+			
 		}).fail(function() {
 			checklistsCtrl.errorOccurred = true;
 			$scope.$apply();

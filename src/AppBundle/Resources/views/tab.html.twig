@@ -6,7 +6,7 @@
         
         {# Styles #}
         <link rel="stylesheet" href="//aui-cdn.atlassian.com/aui-adg/5.9.12/css/aui.min.css" media="all">
-        <link rel="stylesheet" href="/public/css/main.css">
+        <link rel="stylesheet" href="/public/css/main.css?ver=1.0">
         
         {# Initialized checklists data #}
         <script>
@@ -29,7 +29,7 @@
         
         {# Load scripts #}
         <script src="{{ baseUrl }}/atlassian-connect/all.js" type="text/javascript"></script>
-        <script src="/public/js/app.min.js"></script>
+        <script src="/public/js/app.min.js?ver=1.0"></script>
     </head>
     <body>
         <section ng-controller="ChecklistsController as checklistsCtrl" id="checklists" class="ac-content checklists-app">
@@ -37,6 +37,11 @@
             <div class="new-checklist-wrapper">
                 <input placeholder="Checklist name" on-press-esc="checklistsCtrl.toggleNewChecklistForm()" focus-me="checklistsCtrl.newChecklist.editMode" on-press-enter="checklistsCtrl.addNewChecklist()" ng-model="checklistsCtrl.newChecklist.name"  ng-show="checklistsCtrl.newChecklist.editMode"/>
                 <a ng-show="!checklistsCtrl.newChecklist.editMode" ng-click="checklistsCtrl.toggleNewChecklistForm()" href="#" class="aui-button"><i class="cl-icon-plus"></i> checklist</a>
+            </div>
+            
+            {#Total of open/close items#}
+            <div class="total-wrapper">
+                <b>Total:</b> <span ng-class="{complete: checklistsCtrl.total.open == checklistsCtrl.total.all && checklistsCtrl.total.open != 0 }">[[checklistsCtrl.total.open]]/[[checklistsCtrl.total.all]]</span>
             </div>
             
             <div class="error" ng-show="checklistsCtrl.errorOccurred">
