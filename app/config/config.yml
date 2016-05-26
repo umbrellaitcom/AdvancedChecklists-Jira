@@ -82,12 +82,18 @@ atlassian_connect:
             type: 'jwt'
         modules:
             "webPanels": 
+                 -   
+                    url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
+                    location: 'atl.jira.view.issue.right.context'
+                    key: 'checklists-preview-issue'
+                    name:
+                        value: 'Checklists'
                  -
-                      url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
-                      location: 'atl.jira.view.issue.right.context'
-                      key: 'checklists-preview-issue'
-                      name:
-                           value: 'Checklists'
+                    key: 'checklists-preview-mode'
+                    location: 'atl.gh.issue.details.tab'
+                    url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
+                    name:
+                        value: 'Checklists'
     dev:
         baseUrl: 'http://localhost:8888'
                     
