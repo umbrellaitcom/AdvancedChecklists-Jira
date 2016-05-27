@@ -10,6 +10,7 @@ $(function(){
 		if ( ! appWidth ) {
 			appWidth = $app.width();
 		}
+		console.log('Set width: ' + appWidth);
 		AP.resize(appWidth, $app.height());
 	});
 
