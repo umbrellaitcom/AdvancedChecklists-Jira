@@ -4,9 +4,13 @@ $(function(){
 	/**
 	 * Add resize handler for resize iframe in jira
 	 */
+	var appWidth = false;
 	$(function(){
 		var $app = $('#checklists');
-		AP.resize($app.width(), $app.height());
+		if ( ! appWidth ) {
+			appWidth = $app.width();
+		}
+		AP.resize(appWidth, $app.height());
 	});
 
 });
