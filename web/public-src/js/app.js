@@ -7,7 +7,9 @@ $(function(){
 	$(function(){
 		//var $app = $('#checklists');
 		//AP.resize($app.width(), $app.height());
-		AP.sizeToParent();
+		AP.getLocation(function(location){
+			console.log(location);
+		});
 	});
 
 });
