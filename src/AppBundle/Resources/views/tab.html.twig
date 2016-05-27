@@ -32,7 +32,7 @@
         <script src="/public/js/app.min.js?ver=1.7"></script>
     </head>
     <body>
-        <section ng-controller="ChecklistsController as checklistsCtrl" id="checklists" class="ac-content checklists-app">
+        <section ng-controller="ChecklistsController as checklistsCtrl" id="checklists" class="checklists-app">
             
             <div class="new-checklist-wrapper">
                 <input placeholder="Checklist name" on-press-esc="checklistsCtrl.toggleNewChecklistForm()" focus-me="checklistsCtrl.newChecklist.editMode" on-press-enter="checklistsCtrl.addNewChecklist()" ng-model="checklistsCtrl.newChecklist.name"  ng-show="checklistsCtrl.newChecklist.editMode"/>
