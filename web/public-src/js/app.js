@@ -8,7 +8,7 @@ $(function(){
 		//var $app = $('#checklists');
 		//AP.resize($app.width(), $app.height());
 		AP.getLocation(function(location){
-			console.log(location);
+			console.log('Location: '+location);
 		});
 	});
 
