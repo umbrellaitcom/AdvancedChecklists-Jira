@@ -5,8 +5,9 @@ $(function(){
 	 * Add resize handler for resize iframe in jira
 	 */
 	$(function(){
-		var $app = $('#checklists');
-		AP.resize($app.width(), $app.height());
+		//var $app = $('#checklists');
+		//AP.resize($app.width(), $app.height());
+		AP.sizeToParent();
 	});
 
 });
