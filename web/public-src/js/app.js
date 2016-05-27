@@ -4,12 +4,9 @@ $(function(){
 	/**
 	 * Add resize handler for resize iframe in jira
 	 */
-	$(function(){
-		//var $app = $('#checklists');
-		//AP.resize($app.width(), $app.height());
-		AP.getLocation(function(location){
-			console.log('Location: '+location);
-		});
+	$(window).resize(function(){
+		var $app = $('#checklists');
+		AP.resize($app.width(), $app.height());
 	});
 
 });
