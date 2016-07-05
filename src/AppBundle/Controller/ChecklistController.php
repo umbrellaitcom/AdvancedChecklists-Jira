@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ChecklistController extends Controller
 {
     /**
-     * @Route("/api/{projectKey}/{issueKey}/{issueId}/checklist/create", name="checklists-checklist-create")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/checklist/create", name="checklists-checklist-create")
      * @param Request $request
      * @param Request $projectKey
      * @param Request $issueKey
@@ -46,7 +46,7 @@ class ChecklistController extends Controller
     }
 
     /**
-     * @Route("/api/{projectKey}/{issueKey}/{issueId}/checklist/update", name="checklists-checklist-update")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/checklist/update", name="checklists-checklist-update")
      * @param Request $request
      * @param $projectKey
      * @param $issueKey
@@ -83,7 +83,7 @@ class ChecklistController extends Controller
     }
     
     /**
-     * @Route("/api/{projectKey}/{issueKey}/{issueId}/checklist/remove", name="checklists-checklist-remove")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/checklist/remove", name="checklists-checklist-remove")
      * @param Request $request
      * @param Request $projectKey
      * @param Request $issueKey
@@ -119,7 +119,7 @@ class ChecklistController extends Controller
     }
 
     /**
-     * @Route("/api/{projectKey}/{issueKey}/{issueId}/checklist/sortable", name="checklists-checklist-sortable")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/checklist/sortable", name="checklists-checklist-sortable")
      * @param Request $request
      * @param Request $projectKey
      * @param Request $issueKey

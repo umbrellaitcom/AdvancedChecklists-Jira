@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class AppController extends Controller
 {
     /**
-     * @Route("/{projectKey}/{issueKey}/{issueId}/", name="checklists-tab")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/", name="checklists-tab")
      * @param Request $request
      * @param $projectKey
      * @param $issueKey
