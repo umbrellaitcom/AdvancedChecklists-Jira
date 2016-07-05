@@ -1,29 +1,31 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Api;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class ChecklistController extends Controller
+class ItemController extends Controller
 {
     /**
-     * @Route("/api/project/{projectKey}/issue/{issueKey}/checklist/create", name="checklists-checklist-create")
+     * @Route("/{projectKey}/{issueKey}/item/create", name="checklists-item-create")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function createChecklistAction(Request $request, $projectKey, $issueKey) 
+    public function createItemAction(Request $request, $projectKey, $issueKey) 
     {
         if ( $request->getMethod() != 'POST') {
             return new JsonResponse(array('status' => false, 'message' => 'available only POST request'));
         }
         
         $issueId = $request->request->get('issue_id');
-        $checklistName = $request->request->get('name');
+        $checklistId = $request->request->get('checklist_id');
+        $itemText = $request->request->get('item_text');
+        $color = $request->request->get('color');
         
-        if ( ! $issueId OR ! $checklistName ) {
+        if ( ! $issueId OR ! $checklistId OR ! $itemText ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
@@ -32,28 +34,30 @@ class ChecklistController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
         
-        $checklist = $this->get('checklist')->createNewChecklist($issue, $checklistName);
-        return new JsonResponse( array('status' => true, 'checklist_id' => $checklist->getId() ) );
+        $item = $this->get('item')->createNewItem($issue, $checklistId, $itemText, $color);
+        return new JsonResponse( array('status' => (bool)$item, 'item_id' => $item ? $item->getId() : 0 ) );
     }
 
     /**
-     * @Route("/api/project/{projectKey}/issue/{issueKey}/checklist/update", name="checklists-checklist-update")
+     * @Route("/api/{projectKey}/{issueKey}/item/update", name="checklists-item-update")
      * @param Request $request
      * @param $projectKey
      * @param $issueKey
      * @return JsonResponse
      */
-    public function updateChecklistAction(Request $request, $projectKey, $issueKey)
+    public function updateItemAction(Request $request, $projectKey, $issueKey)
     {
         if ( $request->getMethod() != 'POST') {
             return new JsonResponse(array('status' => false, 'message' => 'available only POST request'));
         }
 
         $issueId = $request->request->get('issue_id');
-        $checklistId = $request->request->get('id');
-        $newChecklistName = $request->request->get('name');
+        $checklistId = $request->request->get('checklist_id');
+        $itemId = $request->request->get('item_id');
+        $newItemText = $request->request->get('item_text');
+        $color = $request->request->get('color');
 
-        if ( ! $issueId OR ! $checklistId OR ! $newChecklistName ) {
+        if ( ! $issueId OR ! $checklistId OR ! $itemId OR ! $newItemText ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
@@ -62,25 +66,26 @@ class ChecklistController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
 
-        $result = $this->get('checklist')->updateChecklist($issue, $checklistId, $newChecklistName);
+        $result = $this->get('item')->updateItem($issue, $checklistId, $itemId, $newItemText, $color);
         return new JsonResponse( array('status' => $result) );
     }
     
     /**
-     * @Route("/api/project/{projectKey}/issue/{issueKey}/checklist/remove", name="checklists-checklist-remove")
+     * @Route("/api/{projectKey}/{issueKey}/item/remove", name="checklists-item-remove")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function removeChecklistAction(Request $request, $projectKey, $issueKey)
+    public function removeItemAction(Request $request, $projectKey, $issueKey)
     {
         if ( $request->getMethod() != 'POST') {
             return new JsonResponse(array('status' => false, 'message' => 'available only POST request'));
         }
 
         $issueId = $request->request->get('issue_id');
-        $checklistId = $request->request->get('id');
-
-        if ( ! $issueId OR ! $checklistId ) {
+        $checklistId = $request->request->get('checklist_id');
+        $itemId = $request->request->get('item_id');
+        
+        if ( ! $issueId OR ! $checklistId OR ! $itemId ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
@@ -89,12 +94,45 @@ class ChecklistController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
         
-        $result = $this->get('checklist')->removeChecklist($issue, $checklistId);
+        $result = $this->get('item')->removeItem($issue, $checklistId, $itemId);
         return new JsonResponse( array('status' => $result ) );
     }
 
     /**
-     * @Route("/api/project/{projectKey}/issue/{issueKey}/checklist/sortable", name="checklists-checklist-sortable")
+     * @Route("/api/{projectKey}/{issueKey}/item/complete", name="checklists-item-complete")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function completeItemAction(Request $request, $projectKey, $issueKey) 
+    {
+        if ( $request->getMethod() != 'POST') {
+            return new JsonResponse(array('status' => false, 'message' => 'available only POST request'));
+        }
+
+        $issueId = $request->request->get('issue_id');
+        $checklistId = $request->request->get('checklist_id');
+        $itemId = $request->request->get('item_id');
+
+        if ( ! $issueId OR ! $checklistId OR ! $itemId ) {
+            return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
+        }
+
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        if ( ! $issue ) {
+            return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
+        }
+
+        $item = $this->get('item')->completeItem($issue, $checklistId, $itemId);
+        
+        if ( ! $item ) {
+            return new JsonResponse( array('status' => false ) );
+        }
+        
+        return new JsonResponse( array('status' => true, 'checked' => $item->getChecked() ) );
+    }
+
+    /**
+     * @Route("/api/{projectKey}/{issueKey}/item/sortable", name="checklists-item-sortable")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -105,7 +143,7 @@ class ChecklistController extends Controller
         }
 
         $issueId = $request->request->get('issue_id');
-        $orders = $request->request->get('orders');
+        $orders = $request->request->get('checklists_sort');
 
         if ( ! $issueId OR ! $orders OR ! is_array( $orders ) ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
@@ -116,7 +154,7 @@ class ChecklistController extends Controller
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
 
-        $result = $this->get('checklist')->sortChecklists($issue, $orders);
+        $result = $this->get('item')->sortItems($issue, $orders);
         return new JsonResponse( array('status' => $result ) );
     }
 }
