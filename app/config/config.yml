@@ -67,6 +67,7 @@ swiftmailer:
 
 # Atlassian Connect Configuration
 atlassian_connect:
+    token_lifetime: 86400
     prod:
         key: 'com.advancedchecklists.checklists'
         name: 'Advanced Checklists'
@@ -83,7 +84,7 @@ atlassian_connect:
         modules:
             "webPanels": 
                  -   
-                    url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
+                    url: '/{project.key}/{issue.key}/{issue.id}/'
                     location: 'atl.jira.view.issue.right.context'
                     key: 'checklists-preview-issue'
                     name:
@@ -91,7 +92,7 @@ atlassian_connect:
                  -
                     key: 'checklists-preview-mode'
                     location: 'atl.gh.issue.details.tab'
-                    url: '/project/{project.key}/issue/{issue.key}/tab?issue_id=${issue.id}'
+                    url: '/{project.key}/{issue.key}/{issue.id}/'
                     name:
                         value: 'Checklists'
     dev:
