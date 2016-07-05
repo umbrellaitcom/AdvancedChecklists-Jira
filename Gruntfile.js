@@ -6,23 +6,23 @@ module.exports = function (grunt) {
 		pkg: grunt.file.readJSON('package.json'),
 		watch: {
 			compass: {
-				files: ['web/public-src/sass/**'],
+				files: ['public-src/sass/**'],
 				tasks: ['compass:compile']
 			},
 			webpack: {
-				files: ['web/public-src/js/**'],
+				files: ['public-src/js/**'],
 				tasks: ['uglify']
 			}
 		},
 		compass: {
 			compile: {
 				options: {
-					basePath: 		'./web',
+					basePath: 		'./',
 					cacheDir: 		'public-src/sass/.sass-cache',
 					sassDir: 			'public-src/sass/',
-					cssDir: 			'public/css',
-					imagesDir: 		'public/images',
-					fontsDir: 		'public/fonts',
+					cssDir: 			'web/public/css',
+					imagesDir: 		'web/public/images',
+					fontsDir: 		'web/public/fonts',
 					outputStyle: 	'compressed'
 				}
 			}
@@ -34,10 +34,10 @@ module.exports = function (grunt) {
 			build: {
 				files: {
 					'web/public/js/app.min.js': [
-						'web/public-src/js/libs/*.js', 
-						'web/public-src/js/*.js', 
-						'web/public-src/js/controllers/*.js',
-						'web/public-src/js/directives/*.js'
+						'public-src/js/libs/*.js', 
+						'public-src/js/*.js', 
+						'public-src/js/controllers/*.js',
+						'public-src/js/directives/*.js'
 					]
 				}
 			}
