@@ -5,55 +5,10 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 	var appData = window.checklistsData;
 
 	/**
-	 * Initialized JWT token 
-	 * @param location
-	 * @returns {{}}
-	 */
-	var parseLocation = function(location) {
-		var pairs = location.substring(1).split("&");
-		var obj = {};
-		var pair;
-		var i;
-
-		for ( i in pairs ) {
-			if ( pairs[i] === "" ) continue;
-
-			pair = pairs[i].split("=");
-			obj[ decodeURIComponent( pair[0] ) ] = decodeURIComponent( pair[1] );
-		}
-
-		return obj;
-	};
-	var getEndpointWithToken = function( endpoint ) {
-		return endpoint + '?jwt=' + jwtToken;
-	};
-	var jwtToken = parseLocation(window.location.search)['jwt'];
-
-	/**
 	 * Initialize error occurred flag
 	 * @type {boolean}
 	 */
 	checklistsCtrl.errorOccurred = false;
-
-	/**
-	 * Function parsed plain text and return html with replaced entries
-	 * @param text
-	 * @returns {string}
-	 */
-	var parseItemText = function( text ) {
-		// split text to words by space
-		var words = text.split(' ');
-		
-		// loop all words and try find entries
-		for ( var i in words ) {
-				// replace urls to html <a></a> tag
-				words[i] = words[i].replace(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])/igm, function(url, isHttpDetected ){
-					return '<a target="_blank" href="'+url+'">'+url+'</a>';
-				});
-		}
-		
-		return words.join(' ');
-	};
 	
 	/**
 	 * Initialized checklists model
@@ -90,6 +45,13 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 		}, 50);
 	};
 	calcTotal();
+
+	/**
+	 * Loop all checklists and init completed percents
+	 */
+	for (var i in checklistsCtrl.checklists) {
+		checklistsCtrl.checklists[i].completedPercents = getCompletedPercents( checklistsCtrl.checklists[i].items );
+	}
 
 	/**
 	 * Initialized new checklist model
@@ -175,8 +137,6 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 				'newItemEditMode': true
 			});
 
-			console.log('Created new checklist "'+checklistsCtrl.newChecklist.name+'" with ID: ' + response.checklist_id);
-
 			checklistsCtrl.newChecklist.name = '';
 			checklistsCtrl.newChecklist.editMode = false;
 
@@ -207,7 +167,6 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 				return;
 			}
 
-			console.log('New checklist name: ' + checklist.name);
 			checklist.editMode = ! checklist.editMode;
 
 			$scope.$apply();
@@ -230,8 +189,6 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 					if (response.status != true) {
 						checklistsCtrl.errorOccurred = true;
 					}
-
-					console.log('Removed checklist "'+checklist.name+'" with ID: ' + checklist.id);
 
 					// re-calc total of items
 					calcTotal();
@@ -281,8 +238,6 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 			// re-calc total of items
 			calcTotal();
 
-			console.log('Created new item "'+checklist.newItemText+'" with ID: ' + response.item_id);
-
 			// reset selected color
 			checklist.newItemColor = '#000000';
 			
@@ -320,7 +275,6 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 				return;
 			}
 
-			console.log('Updated item "'+item.text+'" with ID: ' + item.id);
 			item.editMode = ! item.editMode;
 
 			$scope.$apply();
@@ -345,8 +299,6 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 					if (response.status != true) {
 						checklistsCtrl.errorOccurred = true;
 					}
-
-					console.log('Removed item "'+item.text+'" with ID: ' + item.id + ' in checklist "'+checklist.name+'" with ID: ' + checklist.id);
 				}).fail(function() {
 					checklistsCtrl.errorOccurred = true;
 					$scope.$apply();
@@ -373,12 +325,6 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 		}, function( response ) {
 			if (response.status != true) {
 				checklistsCtrl.errorOccurred = true;
-			}
-
-			if ( response.checked ) {
-				console.log('Completed item "'+item.text+'" with ID: ' + item.id);
-			} else {
-				console.log('Uncompleted item "'+item.text+'" with ID: ' + item.id);
 			}
 
 			// re-calc total of items
@@ -456,31 +402,5 @@ angularApplication.controller('ChecklistsController', ["$scope", "$sce", functio
 			item.editColor = item.color
 		}
 	};
-
-	/**
-	 * Function return completed percents items in checklist
-	 * @param items
-	 * @returns {string}
-	 */
-	var getCompletedPercents = function(items) {
-		var checked = 0;
-		for (var i in items) {
-			if (items[i].checked) {
-				checked++;
-			}
-		}
-		
-		if ( ! items.length ) {
-			return '0%';
-		}
-		return Math.round( (checked * 100) / items.length  ) + '%';
-	};
-
-	/**
-	 * Loop all checklists and init completed percents
-	 */
-	for (var i in checklistsCtrl.checklists) {
-		checklistsCtrl.checklists[i].completedPercents = getCompletedPercents( checklistsCtrl.checklists[i].items );
-	}
 	
 }]);

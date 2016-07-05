@@ -35,7 +35,8 @@ module.exports = function (grunt) {
 				files: {
 					'web/public/js/app.min.js': [
 						'public-src/js/libs/*.js', 
-						'public-src/js/*.js', 
+						'public-src/js/*.js',
+						'public-src/js/helpers/*.js',
 						'public-src/js/controllers/*.js',
 						'public-src/js/directives/*.js'
 					]
