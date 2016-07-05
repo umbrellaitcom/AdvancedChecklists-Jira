@@ -46,17 +46,10 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		
 		// loop all words and try find entries
 		for ( var i in words ) {
-			// replace urls to html <a></a> tag
-			words[i] = words[i].replace(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?(\?[^ ]*)?$/ig, function(url, isHttpDetected ){
-				var text = url;
-				
-				// auto add http protocol
-				if ( ! isHttpDetected ) {
-					url = 'http://' + url;
-				}
-				
-				return '<a target="_blank" href="'+url+'">'+text+'</a>';
-			});
+				// replace urls to html <a></a> tag
+				words[i] = words[i].replace(/(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#/%=~_|$?!:,.]*\)|[A-Z0-9+&@#/%=~_|$])/igm, function(url, isHttpDetected ){
+					return '<a target="_blank" href="'+url+'">'+url+'</a>';
+				});
 		}
 		
 		return words.join(' ');
