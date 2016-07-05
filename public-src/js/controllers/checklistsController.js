@@ -1,6 +1,6 @@
 'use strict';
 
-var checklistsController = angularApplication.controller('ChecklistsController', ["$scope", "$sce", function($scope, $sce) {
+angularApplication.controller('ChecklistsController', ["$scope", "$sce", function($scope, $sce) {
 	var checklistsCtrl = this;
 	var appData = window.checklistsData;
 
