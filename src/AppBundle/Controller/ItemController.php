@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ItemController extends Controller
 {
     /**
-     * @Route("/api/{projectKey}/{issueKey}/{issueId}/item/create", name="checklists-item-create")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/item/create", name="checklists-item-create")
      * @param Request $request
      * @param $projectKey
      * @param $issueKey
@@ -49,7 +49,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/api/{projectKey}/{issueKey}/{issueId}/item/update", name="checklists-item-update")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/item/update", name="checklists-item-update")
      * @param Request $request
      * @param $projectKey
      * @param $issueKey
@@ -88,7 +88,7 @@ class ItemController extends Controller
     }
     
     /**
-     * @Route("/api/{projectKey}/{issueKey}/{issueId}/item/remove", name="checklists-item-remove")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/item/remove", name="checklists-item-remove")
      * @param Request $request
      * @param Request $projectKey
      * @param Request $issueKey
@@ -125,7 +125,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/api/{projectKey}/{issueKey}/{issueId}/item/complete", name="checklists-item-complete")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/item/complete", name="checklists-item-complete")
      * @param Request $request
      * @param Request $projectKey
      * @param Request $issueKey
@@ -167,7 +167,7 @@ class ItemController extends Controller
     }
 
     /**
-     * @Route("/api/{projectKey}/{issueKey}/{issueId}/item/sortable", name="checklists-item-sortable")
+     * @Route("/app/{projectKey}/{issueKey}/{issueId}/item/sortable", name="checklists-item-sortable")
      * @param Request $request
      * @param Request $projectKey
      * @param Request $issueKey

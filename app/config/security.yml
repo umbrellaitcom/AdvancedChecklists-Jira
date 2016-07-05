@@ -9,7 +9,7 @@ security:
 
     firewalls:
         jwt_secured_area:
-            pattern: "^/"
+            pattern: "^/app/"
             stateless: true
             simple_preauth:
                 authenticator: jwt_authenticator
