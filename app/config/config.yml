@@ -84,7 +84,7 @@ atlassian_connect:
         modules:
             "webPanels": 
                  -   
-                    url: '/project/{project.key}/issue/{issue.key}/?issue_id=${issue.id}'
+                    url: '/{project.key}/{issue.key}/{issue.id}/'
                     location: 'atl.jira.view.issue.right.context'
                     key: 'checklists-preview-issue'
                     name:
@@ -92,7 +92,7 @@ atlassian_connect:
                  -
                     key: 'checklists-preview-mode'
                     location: 'atl.gh.issue.details.tab'
-                    url: '/project/{project.key}/issue/{issue.key}/?issue_id=${issue.id}'
+                    url: '/{project.key}/{issue.key}/{issue.id}/'
                     name:
                         value: 'Checklists'
     dev:
