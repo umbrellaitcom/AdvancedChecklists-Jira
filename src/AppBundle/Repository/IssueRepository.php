@@ -15,18 +15,21 @@ class IssueRepository extends \Doctrine\ORM\EntityRepository
      * @param $projectKey
      * @param $issueId
      * @param $issueKey
+     * @param $clientKey
      * @return mixed
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneIssue($projectKey, $issueId, $issueKey) 
+    public function findOneIssue($projectKey, $issueId, $issueKey, $clientKey) 
     {
         return $this->createQueryBuilder('i')
             ->andWhere('i.projectKey = :projectKey')
             ->andWhere('i.issueId = :issueId')
             ->andWhere('i.issueKey = :issueKey')
+            ->andWhere('i.clientKey = :clientKey')
             ->setParameter('projectKey', $projectKey)
             ->setParameter('issueId', $issueId)
             ->setParameter('issueKey', $issueKey)
+            ->setParameter('clientKey', $clientKey)
             ->getQuery()
             ->getOneOrNullResult();
     }

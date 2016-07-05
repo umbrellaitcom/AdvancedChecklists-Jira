@@ -20,7 +20,7 @@ class AppController extends Controller
     public function appAction(Request $request, $projectKey, $issueKey, $issueId) 
     {
         // Retrieve Issue
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             // If Issue not exist we should create new issue
             $issue = $this->get('issue')->createIssue($projectKey, $issueKey, $issueId, $this->getUser());
