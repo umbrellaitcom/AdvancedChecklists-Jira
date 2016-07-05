@@ -35,7 +35,7 @@ class ItemController extends Controller
         }
 
         // find issue for item
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             // return fail if issue not found
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
@@ -75,7 +75,7 @@ class ItemController extends Controller
         }
 
         // find issue for item
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -112,7 +112,7 @@ class ItemController extends Controller
         }
 
         // find issue for item
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -149,7 +149,7 @@ class ItemController extends Controller
         }
 
         // find issue for item
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -190,7 +190,7 @@ class ItemController extends Controller
         }
 
         // find issue for item
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }

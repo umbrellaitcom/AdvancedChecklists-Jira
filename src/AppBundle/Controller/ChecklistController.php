@@ -33,7 +33,7 @@ class ChecklistController extends Controller
         }
 
         // find issue for checklist
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -70,7 +70,7 @@ class ChecklistController extends Controller
         }
 
         // find issue for checklist
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -106,7 +106,7 @@ class ChecklistController extends Controller
         }
 
         // find issue for checklist
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
@@ -142,7 +142,7 @@ class ChecklistController extends Controller
         }
 
         // find issue for checklist
-        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey);
+        $issue = $this->getDoctrine()->getRepository('AppBundle:Issue')->findOneIssue($projectKey, $issueId, $issueKey, $this->getUser()->getClientKey());
         if ( ! $issue ) {
             return new JsonResponse(array('status' => false, 'message' => 'Issue is not found'));
         }
