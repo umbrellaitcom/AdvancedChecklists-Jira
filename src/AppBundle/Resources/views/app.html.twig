@@ -12,17 +12,16 @@
         <script>
             window.checklistsData = {
                 checklists: {{ checklistsData | json_encode() | raw }},
-                issue_id: {{ issueId | json_encode() | raw }},
                 endpoints: {
-                    create_checklist: {{ path('checklists-checklist-create', {'projectKey': projectKey, 'issueKey': issueKey}) | json_encode() | raw }},
-                    remove_checklist: {{ path('checklists-checklist-remove', {'projectKey': projectKey, 'issueKey': issueKey}) | json_encode() | raw }},
-                    update_checklist: {{ path('checklists-checklist-update', {'projectKey': projectKey, 'issueKey': issueKey}) | json_encode() | raw }},
-                    order_checklist: {{ path('checklists-checklist-sortable', {'projectKey': projectKey, 'issueKey': issueKey}) | json_encode() | raw }},
-                    create_item: {{ path('checklists-item-create', {'projectKey': projectKey, 'issueKey': issueKey}) | json_encode() | raw }},
-                    update_item: {{ path('checklists-item-update', {'projectKey': projectKey, 'issueKey': issueKey}) | json_encode() | raw }},
-                    remove_item: {{ path('checklists-item-remove', {'projectKey': projectKey, 'issueKey': issueKey}) | json_encode() | raw }},
-                    complete_item: {{ path('checklists-item-complete', {'projectKey': projectKey, 'issueKey': issueKey}) | json_encode() | raw }},
-                    order_items: {{ path('checklists-item-sortable', {'projectKey': projectKey, 'issueKey': issueKey}) | json_encode() | raw }}
+                    create_checklist: {{ path('checklists-checklist-create', {'projectKey': projectKey, 'issueKey': issueKey, 'issueId': issueId}) | json_encode() | raw }},
+                    remove_checklist: {{ path('checklists-checklist-remove', {'projectKey': projectKey, 'issueKey': issueKey, 'issueId': issueId}) | json_encode() | raw }},
+                    update_checklist: {{ path('checklists-checklist-update', {'projectKey': projectKey, 'issueKey': issueKey, 'issueId': issueId}) | json_encode() | raw }},
+                    order_checklist: {{ path('checklists-checklist-sortable', {'projectKey': projectKey, 'issueKey': issueKey, 'issueId': issueId}) | json_encode() | raw }},
+                    create_item: {{ path('checklists-item-create', {'projectKey': projectKey, 'issueKey': issueKey, 'issueId': issueId}) | json_encode() | raw }},
+                    update_item: {{ path('checklists-item-update', {'projectKey': projectKey, 'issueKey': issueKey, 'issueId': issueId}) | json_encode() | raw }},
+                    remove_item: {{ path('checklists-item-remove', {'projectKey': projectKey, 'issueKey': issueKey, 'issueId': issueId}) | json_encode() | raw }},
+                    complete_item: {{ path('checklists-item-complete', {'projectKey': projectKey, 'issueKey': issueKey, 'issueId': issueId}) | json_encode() | raw }},
+                    order_items: {{ path('checklists-item-sortable', {'projectKey': projectKey, 'issueKey': issueKey, 'issueId': issueId}) | json_encode() | raw }}
                 }
             };
         </script>

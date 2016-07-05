@@ -110,7 +110,6 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			}
 			
 			jQuery.post( getEndpointWithToken( appData.endpoints.order_checklist ), {
-				'issue_id': appData.issue_id,
 				'orders': ids 
 			}, function( response ){
 				if (response.status != true) {
@@ -139,7 +138,6 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 			
 			//console.log(checklistsSorts);
 			jQuery.post( getEndpointWithToken( appData.endpoints.order_items ), {
-				'issue_id': appData.issue_id,
 				'checklists_sort': checklistsSorts
 			}, function( response ){
 				if (response.status != true) {
@@ -161,7 +159,6 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		}
 		
 		jQuery.post( getEndpointWithToken( appData.endpoints.create_checklist ), {
-			'issue_id': appData.issue_id,
 			'name': checklistsCtrl.newChecklist.name
 		}, function( response ) {
 			if (response.status != true) {
@@ -202,7 +199,6 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		
 		checklist.name = checklist.editName;
 		jQuery.post( getEndpointWithToken( appData.endpoints.update_checklist ), {
-			'issue_id': appData.issue_id,
 			'id': checklist.id,
 			'name': checklist.name
 		}, function( response ) {
@@ -229,7 +225,6 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		for ( var i in checklistsCtrl.checklists ) {
 			if (checklistsCtrl.checklists[i].id == checklist.id) {
 				jQuery.post( getEndpointWithToken( appData.endpoints.remove_checklist ), {
-					'issue_id': appData.issue_id,
 					'id': checklist.id
 				}, function( response ) {
 					if (response.status != true) {
@@ -264,7 +259,6 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		}
 		
 		jQuery.post( getEndpointWithToken( appData.endpoints.create_item ), {
-			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
 			'item_text': checklist.newItemText,
 			'color': selectedColor
@@ -316,7 +310,6 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		item.parsedText = $sce.trustAsHtml( parseItemText( item.editText ) );
 		
 		jQuery.post( getEndpointWithToken( appData.endpoints.update_item ), {
-			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
 			'item_id': item.id,
 			'item_text': item.text,
@@ -346,7 +339,6 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		for ( var i in checklist.items ) {
 			if ( checklist.items[i].id == item.id ) {
 				jQuery.post( getEndpointWithToken( appData.endpoints.remove_item ), {
-					'issue_id': appData.issue_id,
 					'checklist_id': checklist.id,
 					'item_id': item.id
 				}, function( response ) {
@@ -376,7 +368,6 @@ var checklistsController = angularApplication.controller('ChecklistsController',
 		item.checked = !item.checked;
 		checklist.completedPercents = getCompletedPercents( checklist.items );
 		jQuery.post( getEndpointWithToken( appData.endpoints.complete_item ), {
-			'issue_id': appData.issue_id,
 			'checklist_id': checklist.id,
 			'item_id': item.id
 		}, function( response ) {

@@ -10,20 +10,22 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class ChecklistController extends Controller
 {
     /**
-     * @Route("/{projectKey}/{issueKey}/checklist/create", name="checklists-checklist-create")
+     * @Route("/api/{projectKey}/{issueKey}/{issueId}/checklist/create", name="checklists-checklist-create")
      * @param Request $request
+     * @param Request $projectKey
+     * @param Request $issueKey
+     * @param Request $issueId
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function createChecklistAction(Request $request, $projectKey, $issueKey) 
+    public function createChecklistAction(Request $request, $projectKey, $issueKey, $issueId) 
     {
         if ( $request->getMethod() != 'POST') {
             return new JsonResponse(array('status' => false, 'message' => 'available only POST request'));
         }
         
-        $issueId = $request->request->get('issue_id');
         $checklistName = $request->request->get('name');
         
-        if ( ! $issueId OR ! $checklistName ) {
+        if ( ! $checklistName ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
@@ -37,23 +39,23 @@ class ChecklistController extends Controller
     }
 
     /**
-     * @Route("/api/{projectKey}/{issueKey}/checklist/update", name="checklists-checklist-update")
+     * @Route("/api/{projectKey}/{issueKey}/{issueId}/checklist/update", name="checklists-checklist-update")
      * @param Request $request
      * @param $projectKey
      * @param $issueKey
+     * @param $issueId
      * @return JsonResponse
      */
-    public function updateChecklistAction(Request $request, $projectKey, $issueKey)
+    public function updateChecklistAction(Request $request, $projectKey, $issueKey, $issueId)
     {
         if ( $request->getMethod() != 'POST') {
             return new JsonResponse(array('status' => false, 'message' => 'available only POST request'));
         }
 
-        $issueId = $request->request->get('issue_id');
         $checklistId = $request->request->get('id');
         $newChecklistName = $request->request->get('name');
 
-        if ( ! $issueId OR ! $checklistId OR ! $newChecklistName ) {
+        if ( ! $checklistId OR ! $newChecklistName ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
@@ -67,20 +69,22 @@ class ChecklistController extends Controller
     }
     
     /**
-     * @Route("/api/{projectKey}/{issueKey}/checklist/remove", name="checklists-checklist-remove")
+     * @Route("/api/{projectKey}/{issueKey}/{issueId}/checklist/remove", name="checklists-checklist-remove")
      * @param Request $request
+     * @param Request $projectKey
+     * @param Request $issueKey
+     * @param Request $issueId
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function removeChecklistAction(Request $request, $projectKey, $issueKey)
+    public function removeChecklistAction(Request $request, $projectKey, $issueKey, $issueId)
     {
         if ( $request->getMethod() != 'POST') {
             return new JsonResponse(array('status' => false, 'message' => 'available only POST request'));
         }
 
-        $issueId = $request->request->get('issue_id');
         $checklistId = $request->request->get('id');
 
-        if ( ! $issueId OR ! $checklistId ) {
+        if ( ! $checklistId ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
@@ -94,20 +98,22 @@ class ChecklistController extends Controller
     }
 
     /**
-     * @Route("/api/{projectKey}/{issueKey}/checklist/sortable", name="checklists-checklist-sortable")
+     * @Route("/api/{projectKey}/{issueKey}/{issueId}/checklist/sortable", name="checklists-checklist-sortable")
      * @param Request $request
+     * @param Request $projectKey
+     * @param Request $issueKey
+     * @param Request $issueId
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function sortableUpdateAction(Request $request, $projectKey, $issueKey)
+    public function sortableUpdateAction(Request $request, $projectKey, $issueKey, $issueId)
     {
         if ( $request->getMethod() != 'POST') {
             return new JsonResponse(array('status' => false, 'message' => 'available only POST request'));
         }
-
-        $issueId = $request->request->get('issue_id');
+        
         $orders = $request->request->get('orders');
 
-        if ( ! $issueId OR ! $orders OR ! is_array( $orders ) ) {
+        if ( ! $orders OR ! is_array( $orders ) ) {
             return new JsonResponse(array('status' => false, 'message' => 'needed data is lost'));
         }
 
