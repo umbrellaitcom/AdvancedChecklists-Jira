@@ -12,6 +12,5 @@
 /composer.phar
 /.DS_Store
 /.idea/
-/jira-working-dir/
 /node_modules/
-/web/public-src/sass/.sass-cache/
+/public-src/sass/.sass-cache/

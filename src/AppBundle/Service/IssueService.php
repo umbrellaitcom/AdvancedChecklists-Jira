@@ -28,14 +28,14 @@ class IssueService
     /**
      * @param $projectKey
      * @param $issueKey
-     * @param $request
+     * @param $issueId
      * @param $user
      * @return Issue
      */
-    public function createIssue($projectKey, $issueKey, $request, $user) {
+    public function createIssue($projectKey, $issueKey, $issueId, $user) {
         $issue = new Issue();
         $issue->setProjectKey($projectKey);
-        $issue->setIssueId($request->query->get('issue_id'));
+        $issue->setIssueId($issueId);
         $issue->setIssueKey($issueKey);
         $issue->setClientKey($user->getClientKey());
         
